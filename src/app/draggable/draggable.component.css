@@ -1,0 +1,33 @@
+.resp-container{
+    position: absolute;
+    overflow: hidden;
+    width:400px;
+    height:400px;
+}
+
+
+.iframe-drag-handle{
+    position: absolute;
+    top:0;
+    right:35px;
+    height:2em;
+    background: #cccccc;
+    z-index: 8;
+    padding: 0.25em;
+    text-align: right;
+}
+
+.resp-iframe{
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 0;
+    width: 125%;
+    height: 125%;
+    -moz-transform: scale(.8);
+    -moz-transform-origin: 0 0;
+    -o-transform: scale(.8);
+    -o-transform-origin: 0 0;
+    -webkit-transform: scale(.8);
+    -webkit-transform-origin: 0 0;
+}

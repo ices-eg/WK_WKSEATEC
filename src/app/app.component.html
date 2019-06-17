@@ -1,21 +1,21 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<div class="container-full h-100">
+    <div class="left-sidebar-wrapper" [style.width.%]="sidebarWidth">
+    <a (click)="closeSidebar" class="closebtn">&times;</a>
+     </div>
 
-<router-outlet></router-outlet>
+  <div class="row h-100" id="main" [style.marginLeft.%]="sidebarWidth">
+    <div id="inner-sidebar-wrapper" class="col-md-1 col-lg-1">
+      <ul class="nav flex-column align-items-center">
+        <li id="main-gallery" class="nav-item"><a href="#" (click)="mainGallery">Gallery</a></li>
+        <li id="my-gallery" class="nav-item"  [class.selected]="!isHidden"  routerLink="currRoute" (click)="myGallery();"><a >My Gallery</a></li>
+        <li id="dashboard" class="nav-item" routerLink="/dashboard"><a>Dashboard</a></li>
+      </ul>
+    </div>
+    <div class="col-md-11 col-lg-11 d-none d-md-block main-dashboard">
+      
+      <!--TODO place the different main page components here, e.g shiny gallery, shiny dashboard & shiny app preview-->
+      <router-outlet></router-outlet>
+     </div>
+    
+  </div>
+</div>

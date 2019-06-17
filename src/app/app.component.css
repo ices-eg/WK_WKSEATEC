@@ -1,0 +1,68 @@
+#inner-sidebar-wrapper{
+    height: 100%;
+    background: rgb(16, 130, 158);
+    padding: 0 0 3rem 0;
+    box-shadow: inset -10px 0 5px -5px hsla(0, 0%, 0%, 0.25);
+}
+
+.left-sidebar-wrapper{
+    height: 100%;
+    width:0%;
+    background-color:#095A6E ;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    max-height: 100vh;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
+    box-shadow: inset -10px 0 5px -5px hsla(199, 72%, 13%, 0.1);
+}
+
+#inner-sidebar-wrapper ul{
+    list-style-type: none;
+    width:100%;
+    display: block;
+}
+
+#inner-sidebar-wrapper ul li{
+    display: block;
+    width: 100%;
+    padding:3em 1em;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#inner-sidebar-wrapper ul li.selected{
+    background-color: #095A6E;
+    color: white;
+}
+
+
+#inner-sidebar-wrapper ul li a{
+    display: block;
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: #fff;
+    text-align: center;
+    
+}
+
+#inner-sidebar-wrapper ul li:hover{
+background-color: #095A6E;
+}
+
+#main{
+    transition: 0.5s;
+}
+
+.main-dashboard{
+    background-size: 30px 30px;
+    background-image: linear-gradient(to right, grey 1px, transparent 1px), linear-gradient(to bottom, grey 1px, transparent 1px);
+    padding: 0;
+}

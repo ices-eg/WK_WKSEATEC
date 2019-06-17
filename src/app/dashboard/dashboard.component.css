@@ -1,0 +1,16 @@
+.main-dashboard{
+    background-size: 60px 60px;
+    background-image: linear-gradient(to right, grey 1px, transparent 1px), linear-gradient(to bottom, grey 1px, transparent 1px);
+}
+
+.dashboard{
+    width: 100%;
+    height: 100%;
+}
+
+.app-containers{
+    padding:0;
+    margin: 0;
+    width:100%;
+    height: 100%;
+}

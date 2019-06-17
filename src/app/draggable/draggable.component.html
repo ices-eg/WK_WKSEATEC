@@ -1,0 +1,11 @@
+<div class="resp-container" ngResizable ngDraggable
+rzHandles="n,s,e,w,se,sw"
+[handle]="dragHandle"
+[bounds]="boundsArea"
+[inBounds]="true"
+[preventDefaultEvent]="true">
+<div #dragHandle class="iframe-drag-handle">
+  <h6>Click to Drag</h6>
+</div>
+  <iframe class="resp-iframe" src="http://10.11.1.70:3845"></iframe>
+</div>
