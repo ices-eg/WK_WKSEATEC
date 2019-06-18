@@ -20,6 +20,7 @@ export class AppComponent {
   }
 
   myGallery():void{
+    this.currRoute=this.router.url;
     if(this.isHidden){
       this.sidebarWidth =25;
       this.isHidden=false;
@@ -28,5 +29,6 @@ export class AppComponent {
       this.sidebarWidth=0;
       this.isHidden=true;
     }
+    console.log(this.currRoute);
   }
 }

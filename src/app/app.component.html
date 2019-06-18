@@ -9,7 +9,7 @@
     <div id="inner-sidebar-wrapper" class="col-xl-1 col-lg-2">
       <ul class="nav flex-column align-items-center">
         <li id="main-gallery" class="nav-item"><a href="#" (click)="mainGallery">Gallery</a></li>
-        <li id="my-gallery" class="nav-item"  [class.selected]="!isHidden"  routerLink="currRoute" (click)="myGallery();"><a >Widgets</a></li>
+        <li id="my-gallery" class="nav-item" ><a (click)="myGallery();" [class.selected]="!isHidden">Widgets</a></li>
         <li id="dashboard" class="nav-item" routerLink="/dashboard"><a>Dashboard</a></li>
       </ul>
     </div>

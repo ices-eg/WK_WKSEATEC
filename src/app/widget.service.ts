@@ -31,8 +31,9 @@ export class WidgetService {
     this.refreshNeeded.next();
   }
 
-  public removeWidgetFromView(id:number){
-    
+  public removeWidget(index:number){
+    this.viewList.splice(index,1);
+    this.refreshNeeded.next();
   }
 
   public getViewWidgets():Observable<Widget[]>{

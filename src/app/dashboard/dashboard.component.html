@@ -3,7 +3,7 @@
   <app-draggable [boundsRegion]="dragBounds"></app-draggable>-->
   <ul>
     <li *ngFor="let widget of widgetList; let i =index" (click)="widgetClicked(widget,i)" [ngClass]="{'active': widget.active,'inactive':!widget.active}">
-      <app-draggable  [source]="widget.widgetURL" [boundsRegion]="dragBounds"></app-draggable>
+      <app-draggable [index]='i' [source]="widget.widgetURL" [boundsRegion]="dragBounds"></app-draggable>
     </li>
   </ul>
 </div>

@@ -27,18 +27,23 @@
 }
 
 #inner-sidebar-wrapper ul li{
-    display: block;
-    width: 100%;
-    padding:3em 1em;
-    cursor: pointer;
     border: none;
     outline: none;
+    display: block;
+}
+
+#inner-sidebar-wrapper ul li a{
+    padding:3em 1em;
+    display: flex;
     white-space: nowrap;
-    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    height: 100%;
     text-overflow: ellipsis;
 }
 
-#inner-sidebar-wrapper ul li.selected{
+#inner-sidebar-wrapper ul li a.selected{
     background-color: #095A6E;
     color: white;
 }

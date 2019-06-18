@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ElementRef } from '@angular/core';
+import { WidgetService } from '../widget.service';
 
 
 declare const require:any;
@@ -11,11 +12,12 @@ declare const require:any;
 
 export class DraggableComponent implements OnInit {
 @Input('source') urlSource:string;
+@Input('index') idx:number;
 @Input('boundsRegion') boundsArea:ElementRef;
 
   
 
-  constructor() { }
+  constructor(private widgetService:WidgetService) { }
 
   ngOnInit() {
     console.log(this.boundsArea);
@@ -25,5 +27,8 @@ export class DraggableComponent implements OnInit {
     
   }
 
+  remove():void{
+    this.widgetService.removeWidget(this.idx);
+  }
   
 }

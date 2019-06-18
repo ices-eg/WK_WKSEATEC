@@ -6,6 +6,7 @@ rzHandles="n,s,e,w,se,sw"
 [preventDefaultEvent]="true">
 <div #dragHandle class="iframe-drag-handle">
   <h6>Click to Drag</h6>
+  <a class="remove" (click)="remove()">&times;</a>
 </div>
   <iframe class="resp-iframe" [src]="urlSource | safe"></iframe>
 </div>

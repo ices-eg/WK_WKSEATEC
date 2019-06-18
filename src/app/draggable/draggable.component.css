@@ -1,43 +1,68 @@
-.resp-container{
-    position: absolute;
-    overflow: hidden;
-    width:400px;
-    height:400px;
+.resp-container {
+  position: absolute;
+  margin: 2rem;
+  width: 400px;
+  height: 400px;
 }
 
-
-.iframe-drag-handle{
-    position: absolute;
-    top:0;
-    right:35px;
-    height:2em;
-    background: #cccccc;
-    z-index: 8;
-    padding: 0.25em;
-    text-align: right;
+.iframe-drag-handle {
+  position: relative;
+  top: -2em;
+  left: 0px;
+  width:100%;
+  height: 2em;
+  background: #cccccc;
+  padding: 0.25em;
+  text-align: center;
+  z-index: 8;
+ /* vertical-align: top;*/
 }
 
-.iframe-drag-handle:hover{
-    cursor: -webkit-grab;
-    cursor: grab;
+.iframe-drag-handle:hover {
+  cursor: -webkit-grab;
+  cursor: grab;
 }
 
-.iframe-drag-handle:active{
-    cursor: -webkit-grabbing;
-    cursor: grabbing;
+.iframe-drag-handle:active {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
 }
 
-.resp-iframe{
-    position: absolute;
-    top: 0;
-    left: 0;
-    border: 0;
-    width: 125%;
-    height: 125%;
-    -moz-transform: scale(.8);
-    -moz-transform-origin: 0 0;
-    -o-transform: scale(.8);
-    -o-transform-origin: 0 0;
-    -webkit-transform: scale(.8);
-    -webkit-transform-origin: 0 0;
+.resp-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+  width: 125%;
+  height: 125%;
+  -moz-transform: scale(0.8);
+  -moz-transform-origin: 0 0;
+  -o-transform: scale(0.8);
+  -o-transform-origin: 0 0;
+  -webkit-transform: scale(0.8);
+  -webkit-transform-origin: 0 0;
+}
+
+.remove {
+  float: right;
+  padding: 8px 16px;
+  vertical-align: middle;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 50%;
+  border: none;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  font-size: 16px !important;
+  background-color: rgb(16, 130, 158);
+  color: #fff !important;
+  white-space: nowrap;
+  font-weight: bold;
+  margin-top: 0.3rem;
+  margin-right: 0.7rem;
+}
+
+.remove:hover{
+    background-color: #095A6E;
 }
