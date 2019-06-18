@@ -4,4 +4,5 @@ export class Widget{
     name:string;
     author:string;
     id:number;
+    active?:boolean;
 }

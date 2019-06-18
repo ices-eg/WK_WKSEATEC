@@ -13,6 +13,7 @@ export class DraggableComponent implements OnInit {
 @Input('source') urlSource:string;
 @Input('boundsRegion') boundsArea:ElementRef;
 
+  
 
   constructor() { }
 
@@ -24,4 +25,5 @@ export class DraggableComponent implements OnInit {
     
   }
 
+  
 }

@@ -10,6 +10,7 @@ import { Widget } from '../widget';
 export class WidgetsComponent implements OnInit {
 
   widgets: Widget[];
+  
 
   constructor(private widgetService:WidgetService) { }
 

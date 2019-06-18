@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit {
 
   widgetList:Widget[];
   private sub:Subscription;
+  isFront:boolean;
   
   @ViewChild('dragBounds',{static:true}) dragBounds:ElementRef;
   constructor(private widgetService:WidgetService) { }
@@ -22,11 +23,21 @@ export class DashboardComponent implements OnInit {
       this.getWidgets();
     });
     this.getWidgets();
+    this.isFront=false;
   }
 
   getWidgets(){
     this.sub = this.widgetService.getViewWidgets().subscribe(widgets=>this.widgetList=widgets);
     console.log(this.widgetList);
+  }
+
+  widgetClicked(widget,indx):void{
+    
+    this.widgetList.forEach(e => {
+      e.active = false; 
+    });
+    widget.active = true;
+    console.log(widget);
   }
 
 }
