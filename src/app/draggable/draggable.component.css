@@ -17,6 +17,16 @@
     text-align: right;
 }
 
+.iframe-drag-handle:hover{
+    cursor: -webkit-grab;
+    cursor: grab;
+}
+
+.iframe-drag-handle:active{
+    cursor: -webkit-grabbing;
+    cursor: grabbing;
+}
+
 .resp-iframe{
     position: absolute;
     top: 0;

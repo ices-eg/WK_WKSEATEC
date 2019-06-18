@@ -1,13 +1,15 @@
 <div class="container-full h-100">
     <div class="left-sidebar-wrapper" [style.width.%]="sidebarWidth">
-    <a (click)="closeSidebar" class="closebtn">&times;</a>
+      <div class="widgets-container">
+        <app-widgets></app-widgets>
+      </div>
      </div>
 
   <div class="row h-100" id="main" [style.marginLeft.%]="sidebarWidth">
-    <div id="inner-sidebar-wrapper" class="col-md-1 col-lg-1">
+    <div id="inner-sidebar-wrapper" class="col-xl-1 col-lg-2">
       <ul class="nav flex-column align-items-center">
         <li id="main-gallery" class="nav-item"><a href="#" (click)="mainGallery">Gallery</a></li>
-        <li id="my-gallery" class="nav-item"  [class.selected]="!isHidden"  routerLink="currRoute" (click)="myGallery();"><a >My Gallery</a></li>
+        <li id="my-gallery" class="nav-item"  [class.selected]="!isHidden"  routerLink="currRoute" (click)="myGallery();"><a >Widgets</a></li>
         <li id="dashboard" class="nav-item" routerLink="/dashboard"><a>Dashboard</a></li>
       </ul>
     </div>
