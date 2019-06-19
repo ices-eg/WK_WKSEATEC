@@ -1,0 +1,20 @@
+<div class="jumbotron">
+  <h1 class="display-4">Gallery</h1>
+  <p class="lead">Shiny App gallery, containing apps shared by our users</p>
+  <hr class="my-4">
+  <p>TODO: Searchbar and different filters/categories will be placed here</p>
+</div>
+<div class="row border border-light">
+  <div class="col-lg-4 col-md-4 col-sm-6 widget-item" *ngFor="let widget of widgets">
+    <div class="wcard">
+      <img src={{widget.imageURL}} />
+      <div class="wcontainer">
+        <div>
+          <h4><a class="link">{{widget.name}}</a></h4>
+          <h6>{{widget.author}}</h6>
+        </div>
+        <a class="but" (click)="addWidget(widget)">+</a>
+      </div>
+    </div>
+  </div>
+</div>

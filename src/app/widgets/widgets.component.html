@@ -1,5 +1,7 @@
+
+<input #searchBox  (input)="search(searchBox.value)" id="widget-search" class="form-control search" placeholder="Search Your Widgets">
 <ul class="widgets">
-  <li class="widget-item" *ngFor="let widget of widgets">
+  <li class="widget-item" *ngFor="let widget of widgets | filter:myFilter">
     <div class="card">
         <img src={{widget.imageURL}}/>
         <div class="container">
@@ -7,7 +9,7 @@
               <h4>{{widget.name}}</h4>
               <h6>{{widget.author}}</h6>
           </div>
-          <a (click)="addWidget(widget)">+</a>
+          <a *ngIf="router.url === '/dashboard'" (click)="addWidget(widget)">+</a>
         </div>
     </div>
   </li>

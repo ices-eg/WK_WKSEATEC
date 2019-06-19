@@ -9,6 +9,9 @@ import {AngularDraggableModule} from 'angular2-draggable';
 import {FormsModule} from '@angular/forms';
 import { WidgetsComponent } from './widgets/widgets.component';
 import { SafePipe } from './safepipe';
+import { GalleryComponent } from './gallery/gallery.component';
+import {FilterPipe} from './filter.pipe';
+
 
 @NgModule({
   declarations: [
@@ -16,7 +19,9 @@ import { SafePipe } from './safepipe';
     DashboardComponent,
     DraggableComponent,
     WidgetsComponent,
-    SafePipe
+    SafePipe,
+    GalleryComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
@@ -24,7 +29,8 @@ import { SafePipe } from './safepipe';
     AngularDraggableModule,
     FormsModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [FilterPipe],
+  bootstrap: [AppComponent],
+  exports:[FilterPipe]
 })
 export class AppModule { }

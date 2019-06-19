@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {WidgetService} from '../widget.service'
 import { Widget } from '../widget';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-widgets',
@@ -10,9 +11,9 @@ import { Widget } from '../widget';
 export class WidgetsComponent implements OnInit {
 
   widgets: Widget[];
-  
+  myFilter:{};
 
-  constructor(private widgetService:WidgetService) { }
+  constructor(private widgetService:WidgetService,public router:Router) { }
 
   ngOnInit() {
     this.getWidgets();
@@ -25,6 +26,10 @@ export class WidgetsComponent implements OnInit {
 
   addWidget(widget:Widget):void{
     this.widgetService.addWidget(widget);
+  }
+
+  search(search:string):void{
+    this.myFilter = {name:search};
   }
 
 }
