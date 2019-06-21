@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Widget } from '../widget';
 import { WidgetService } from '../widget.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {FormModalComponent} from '../form-modal/form-modal.component';
 
 @Component({
   selector: 'app-gallery',
@@ -11,7 +13,7 @@ import { WidgetService } from '../widget.service';
 export class GalleryComponent implements OnInit {
 
   widgets: Widget[];
-  constructor(private widgetService:WidgetService,router:Router) {
+  constructor(private widgetService:WidgetService,router:Router,private modalService:NgbModal) {
       
    }
 
@@ -22,5 +24,15 @@ export class GalleryComponent implements OnInit {
   getWidgets():void{
     this.widgetService.getWidgets()
     .subscribe(widgets=>this.widgets =widgets);
+  }
+
+  openFormModal(){
+    const modalRef = this.modalService.open(FormModalComponent,{size:'lg'});
+
+    modalRef.result.then((result)=>{
+      console.log(result);
+    }).catch((error)=>{
+      console.log(error);
+    });
   }
 }

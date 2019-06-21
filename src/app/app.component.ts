@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import {Router} from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormModalComponent } from './form-modal/form-modal.component';
+import { resource } from 'selenium-webdriver/http';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +16,7 @@ export class AppComponent {
   isHidden:boolean;
   currRoute:string;
 
-  constructor(private router:Router){
+  constructor(private router:Router, private modalService:NgbModal){
     this.sidebarWidth= 0;
     this.isHidden=true;
     this.currRoute = router.url;
@@ -31,4 +34,6 @@ export class AppComponent {
     }
     console.log(this.currRoute);
   }
+
+  
 }
