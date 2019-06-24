@@ -35,4 +35,10 @@ export class GalleryComponent implements OnInit {
       console.log(error);
     });
   }
+
+  saveWidget(widget:Widget){
+    console.log("Clicked");
+    this.widgetService.saveWidget(widget)
+    .subscribe();
+  }
 }

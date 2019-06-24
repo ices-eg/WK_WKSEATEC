@@ -42,7 +42,9 @@ export class WidgetService {
     //return of(WIDGETS);
     console.log(this.baseURL+this.getWidgets);
     return this.http.get<Widget[]>('http://localhost:3000/get-widgets',httpOptions)
-    .pipe(catchError(this.handleError<Widget[]>('getWidgets',[])));
+    .pipe(
+      tap(_=>console.log("got widgets")),
+      catchError(this.handleError<Widget[]>('getWidgets',[])));
   }
 
    postWidget(widget:Widget):Observable<Widget>{
@@ -62,6 +64,22 @@ export class WidgetService {
   public removeWidget(index:number){
     this.viewList.splice(index,1);
     this.refreshNeeded.next();
+  }
+
+  public saveWidget(item:Widget):Observable<Widget>{
+    return this.http.post<any>('http://localhost:3000/save-widget',item,httpOptions)
+    .pipe(
+      tap(_=>console.log("posted")),
+      catchError(this.handleError('saveWidget',item))
+    );
+  }
+
+  public getSavedWidgets():Observable<Widget[]>{
+    return this.http.get<Widget[]>('http://localhost:3000/get-saved-widgets',httpOptions)
+    .pipe(
+      tap(_=>console.log("got saved widgets")),
+      catchError(this.handleError<Widget[]>('getSavedWidgets',[]))
+    );
   }
 
   public getViewWidgets():Observable<Widget[]>{

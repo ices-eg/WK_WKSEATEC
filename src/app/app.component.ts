@@ -15,11 +15,13 @@ export class AppComponent {
   sidebarWidth:number;
   isHidden:boolean;
   currRoute:string;
+  loadComponent:boolean;
 
   constructor(private router:Router, private modalService:NgbModal){
     this.sidebarWidth= 0;
     this.isHidden=true;
     this.currRoute = router.url;
+    this.loadComponent=false;
   }
 
   myGallery():void{
@@ -27,10 +29,12 @@ export class AppComponent {
     if(this.isHidden){
       this.sidebarWidth =25;
       this.isHidden=false;
+      this.loadComponent=true;
     }
     else{
       this.sidebarWidth=0;
       this.isHidden=true;
+      this.loadComponent=false;
     }
     console.log(this.currRoute);
   }

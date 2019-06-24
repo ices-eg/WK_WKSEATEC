@@ -20,7 +20,7 @@ export class WidgetsComponent implements OnInit {
   }
 
   getWidgets():void{
-    this.widgetService.getWidgets()
+    this.widgetService.getSavedWidgets()
     .subscribe(widgets => this.widgets = widgets);
   }
 
