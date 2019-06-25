@@ -5,10 +5,9 @@ const {poolPromise} = require('../config/db');
 
 const imageEndpoint = '/blob/master/Screenshot.png?raw=true';
 
-var node_ssh = require('node-ssh');
-var ssh = new node_ssh();
-var Docker = require('dockerode');
-var docker = new Docker({host:'10.11.1.70',port:'22',});
+var {ssh} = require('../config/ssh');
+
+var dockerHost = require('../config/docker');
 
 
 /* GET home page. */
@@ -91,33 +90,53 @@ router.get("/load-dashboard", function(req, res, next) {});
 //Download dashboard to use offline
 router.get("/download-dashboard", function(req, res, next) {});
 
+router.get("/get-widget-url/",function(req,res,next){
+  var containerName = req.query.name;
+  
+  var options = {
+    all:true,limit:1,filters:{name:[containerName]}
+  }
+  //console.log(options);
+  dockerHost.listContainers(options,(err,containers)=>{
+    if(err){
+      throw err;
+    }
+    var containerData;
+    if(containers.length>0){
+      containerData = containers[0];
+      if(containerData.State === "running"){
+
+      }
+      else{
+        console.log("not running,lets boot her up!");
+        var container = dockerHost.getContainer(containerData.Id);
+        container.start({},(err,data)=>{
+          console.log(data);
+        });
+      }
+    }
+    else{
+      var splitNames = containerName.split(/[:/]/);
+      /*dockerHost.run(containerName,[],process.stdout,{Image:containerName,name:splitNames[1],ExposedPorts:{'3838/tcp':{}},PublishAllPorts:true})
+      .then(function(container){
+        console.log(container.output.StatusCode);
+      })*/
+      dockerHost.pull(containerName,(err,mystream)=>{
+        console.log(mystream);
+      })
+    }
+    
+    res.send(containers);
+  });
+});
+
 router.get("/tests", async function(req, res, next) {
-
- /* ssh.connect({
-    host:'10.11.1.70',
-    username:'***REMOVED***',
-    password:'***REMOVED***'
-  }).then(function(){
-    ssh.execCommand('docker ps').then(function(result){
-      console.log(result);
-    });
-
-  });*/
 
  /* var container = docker.getContainer('a829a477f0a0');
   container.inspect(function(err,data){
     console.log(data);
   })*/
-  try{
-    const pool =  await poolPromise;
-    const result = await pool.request()
-      .query('select * from Widgets');
-      res.json(result.recordset);
-  }
-  catch(err){
-    res.status(500);
-    res.send(err.Message);
-  }
+  
 });
 
 module.exports = router;
