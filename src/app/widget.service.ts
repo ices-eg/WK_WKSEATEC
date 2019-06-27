@@ -57,8 +57,13 @@ export class WidgetService {
   }
 
   public addWidget(item:Widget){
-    this.viewList.push(item);
-    this.refreshNeeded.next();
+    return this.http.get<string>('http://localhost:3000/get-widget-url/',{params:{name:item.docker},headers:httpOptions.headers})
+    .subscribe((res)=>{
+      item.widgetURL = 'http://localhost:'+res;
+      console.log(item.widgetURL);
+      this.viewList.push(item);
+      this.refreshNeeded.next();
+    });
   }
 
   public removeWidget(index:number){
