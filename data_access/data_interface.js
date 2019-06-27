@@ -21,5 +21,5 @@ async function saveWidget(body){
 }
 
 module.exports = {
-    getWidgets,getSavedWidgets,postWidget
+    getWidgets,getSavedWidgets,postWidget,saveWidget
 }

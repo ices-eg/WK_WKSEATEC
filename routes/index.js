@@ -41,7 +41,7 @@ router.get("/get-widgets",async function(req, res, next) {
 
 //Save widget to personal widget tray
 router.post("/save-widget",async function(req, res, next) {
-  data_access.postWidget(req.body)
+  data_access.saveWidget(req.body)
   .then(response=>{
     res.send(response);
   }).catch(err=>{
@@ -72,42 +72,53 @@ router.get("/download-dashboard", function(req, res, next) {});
 
 router.get("/get-widget-url/",function(req,res,next){
   var containerName = req.query.name;
+  var splitNames = containerName.split(/[:/]/);
+  var name = splitNames[1];  
   
   var options = {
-    all:true,limit:1,filters:{name:[containerName]}
+    all:true,limit:1,filters:{name:[name]}
   }
   //console.log(options);
   dockerHost.listContainers(options,(err,containers)=>{
     if(err){
       throw err;
     }
+    console.log(containers);
     var containerData;
     if(containers.length>0){
       containerData = containers[0];
       if(containerData.State === "running"){
-
+          var container = dockerHost.getContainer(containerData.Id);
+          container.inspect((err,data)=>{
+            res.send(data.NetworkSettings.Ports["3838/tcp"][0].HostPort);
+          })
       }
       else{
         console.log("not running,lets boot her up!");
         var container = dockerHost.getContainer(containerData.Id);
         container.start({},(err,data)=>{
-          console.log(data);
+          container.inspect((err,data)=>{
+            res.send(data.NetworkSettings.Ports["3838/tcp"][0].HostPort);
+          });
         });
       }
     }
     else{
+      console.log("Container doesnt exist");
       var splitNames = containerName.split(/[:/]/);      
       var startOptions = {
         PortBindings:{'3838/tcp':[{'HostPort':''}]}
       }
 
-      var container = dockerHost.createContainer({
+       var container = dockerHost.createContainer({
         Image:containerName,
         name:splitNames[1],
         Tty:true,
         ExposedPorts:{'3838/tcp':{}},
+        Volumes:{'/srv/shiny-server/data':{}},
         HostConfig:{
-          PortBindings:{'3838/tcp':[{'HostPort':''}]
+          Binds:['c:/Users/feasbur3/Documents/Bursary/data:/srv/shiny-server/data'],
+          PortBindings:{'3838/tcp':[{'HostPort':''}],
         }
         }
       }).then(container=>{
@@ -117,15 +128,16 @@ router.get("/get-widget-url/",function(req,res,next){
           res.send(data.NetworkSettings.Ports["3838/tcp"][0].HostPort);
         });
       });
+
     }
   });
 });
 
 router.get("/tests", async function(req, res, next) {
   var container = dockerHost.getContainer('datras-qc-length-weight'); 
-  container.inspect((err,data)=>{
+  /*container.inspect((err,data)=>{
     res.send();
-  })
+  })*/
 });
 
 module.exports = router;
