@@ -96,16 +96,7 @@ router.get("/get-widget-url/",function(req,res,next){
       }
     }
     else{
-      var splitNames = containerName.split(/[:/]/);
-     /* dockerHost.run(containerName,[],process.stdout,{Image:containerName,name:splitNames[1],ExposedPorts:{'3838/tcp':{}},HostConfig:{
-        PortBindings:{'3838/tcp':[{'HostPort':''}]}
-      }})
-      .then(function(container){
-        console.log(container.output.StatusCode);
-      }).catch(function(err){
-        console.log(err);
-      });*/
-      
+      var splitNames = containerName.split(/[:/]/);      
       var startOptions = {
         PortBindings:{'3838/tcp':[{'HostPort':''}]}
       }
@@ -127,15 +118,10 @@ router.get("/get-widget-url/",function(req,res,next){
         });
       });
     }
-
-    
-    
-    res.send(containers);
   });
 });
 
 router.get("/tests", async function(req, res, next) {
-
   var container = dockerHost.getContainer('datras-qc-length-weight'); 
   container.inspect((err,data)=>{
     res.send();
