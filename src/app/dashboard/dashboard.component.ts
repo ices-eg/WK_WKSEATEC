@@ -1,4 +1,4 @@
-import {ViewChild, Component, OnInit, ElementRef } from '@angular/core'
+import {ViewChild, Component, OnInit, ElementRef, AfterViewInit } from '@angular/core'
 import {WidgetService} from '../widget.service';
 import { Widget } from '../widget';
 import { Subscription } from 'rxjs';
@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./dashboard.component.css'],
 })
 
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit{
 
   widgetList:Widget[];
   private sub:Subscription;
@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit {
   
   @ViewChild('dragBounds',{static:true}) dragBounds:ElementRef;
   constructor(private widgetService:WidgetService) { }
+
 
   ngOnInit() {
     this.widgetService.refreshNeeded.subscribe(()=>{
@@ -27,17 +28,23 @@ export class DashboardComponent implements OnInit {
   }
 
   getWidgets(){
-    this.sub = this.widgetService.getViewWidgets().subscribe(widgets=>this.widgetList=widgets);
-    console.log(this.widgetList);
+    this.sub = this.widgetService.getViewWidgets().subscribe((widgets)=>{
+      this.widgetList=widgets;
+      console.log(this.widgetList); 
+    });
   }
 
-  widgetClicked(widget,indx):void{
+  widgetClicked(widget,indx,ref:ElementRef):void{
     
     this.widgetList.forEach(e => {
       e.active = false; 
     });
     widget.active = true;
     console.log(widget);
+  }
+
+  onNotify(event){
+    console.log(event);
   }
 
 }

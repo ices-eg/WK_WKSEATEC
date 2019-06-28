@@ -17,6 +17,7 @@ export class WidgetsComponent implements OnInit {
 
   ngOnInit() {
     this.getWidgets();
+   
   }
 
   getWidgets():void{
