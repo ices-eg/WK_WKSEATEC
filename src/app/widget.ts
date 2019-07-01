@@ -13,6 +13,8 @@ export class Widget{
         this.author = data.author;
         this.github = data.github;
         this.docker = data.docker;
+        this.id = data.id;
+        this.widgetURL = data.widgetURL;
     }
     
 }

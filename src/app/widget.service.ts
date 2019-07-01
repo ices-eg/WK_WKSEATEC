@@ -59,9 +59,9 @@ export class WidgetService {
   public addWidget(item:Widget){
     return this.http.get<string>('http://localhost:3000/get-widget-url/',{params:{name:item.docker},headers:httpOptions.headers})
     .subscribe((res)=>{
-      item.widgetURL = 'http://localhost:'+res;
-      console.log(item.widgetURL);
-      this.viewList.push(item);
+      var url = 'http://localhost:'+res;
+      let returnWidget = new Widget({name:item.name,author:item.author,github:item.github,docker:item.docker,widgetURL:url});
+      this.viewList.push(returnWidget);
       this.refreshNeeded.next();
     });
   }
