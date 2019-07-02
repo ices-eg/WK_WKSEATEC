@@ -2,6 +2,7 @@ import { ViewChild, Component, OnInit, ElementRef, AfterViewInit } from '@angula
 import { WidgetService } from '../widget.service';
 import { Widget } from '../widget';
 import { Subscription } from 'rxjs';
+import { Draggable } from '../Draggable';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,7 +12,7 @@ import { Subscription } from 'rxjs';
 
 export class DashboardComponent implements OnInit {
 
-  widgetList: Widget[];
+  widgetViewList: Draggable[];
   private sub: Subscription;
   isFront: boolean;
 
@@ -29,13 +30,13 @@ export class DashboardComponent implements OnInit {
 
   getWidgets() {
     this.sub = this.widgetService.getViewWidgets().subscribe((widgets) => {
-      this.widgetList = widgets;
-      console.log(this.widgetList);
+      this.widgetViewList = widgets;
+      console.log(this.widgetViewList);
     });
   }
 
   widgetClicked(widget, indx, ref: ElementRef): void {
-    this.widgetList.forEach(e => {
+    this.widgetViewList.forEach(e => {
       e.active = false;
     });
     widget.active = true;

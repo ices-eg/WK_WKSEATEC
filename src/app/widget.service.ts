@@ -4,6 +4,7 @@ import {WIDGETS} from './mock-widgets';
 import { Observable,of, Subject, BehaviorSubject, Subscription} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {catchError,map,tap} from 'rxjs/operators';
+import { Draggable } from './Draggable';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,7 +20,9 @@ export class WidgetService {
 
   private _refreshNeeded = new Subject<void>();
 
-  private viewList:Widget[];
+  //private viewList:Widget[];
+
+  private viewList:Draggable[];
 
   private baseURL = 'http://localhost:3000/';
 
@@ -69,8 +72,10 @@ export class WidgetService {
     return this.http.get<string>('http://localhost:3000/get-widget-url/',{params:{name:item.docker},headers:httpOptions.headers})
     .subscribe((res)=>{
       var url = 'http://localhost:'+res;
-      let returnWidget = new Widget({name:item.name,author:item.author,github:item.github,docker:item.docker,widgetURL:url});
-      this.viewList.push(returnWidget);
+      let returnWidget = new Widget({name:item.name,author:item.author,github:item.github,docker:item.docker,widgetURL:url,id:item.id});
+      let returnDraggable = new Draggable({offsetLeft:0,offsetTop:0,sizeX:400,sizeY:400,widget:returnWidget});
+
+      this.viewList.push(returnDraggable);
       this.refreshNeeded.next();
     });
   }
@@ -80,7 +85,7 @@ export class WidgetService {
     this.refreshNeeded.next();
   }
 
-  public getViewWidgets():Observable<Widget[]>{
+  public getViewWidgets():Observable<Draggable[]>{
     return of(this.viewList);
   }
 

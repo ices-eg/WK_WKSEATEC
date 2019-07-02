@@ -9,19 +9,20 @@ import { Draggable } from '../Draggable';
 })
 
 export class DraggableComponent implements OnInit, AfterViewInit {
-  @Input('source') urlSource: string;
-  @Input('id') id: number;
+  private urlSource: string;
+
+  @Input('draggable') draggable:Draggable; 
   @Input('idx') idx: number;
   @Input('boundsRegion') boundsArea: ElementRef;
   @Output() notify: EventEmitter<Draggable> = new EventEmitter<Draggable>();
 
   @ViewChild('draggable', { static: false }) element: ElementRef;
 
-  dragValues = new Draggable;
 
   constructor(private widgetService: WidgetService) { }
 
   ngOnInit() {
+    this.urlSource = this.draggable.widget.widgetURL;
   }
 
   getURL() {
@@ -34,23 +35,22 @@ export class DraggableComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.dragValues.offsetLeft = this.element.nativeElement.offsetLeft;
-    this.dragValues.offsetTop = this.element.nativeElement.offsetTop;
-    this.dragValues.sizeX = 400;
-    this.dragValues.sizeY = 400;
-    this.dragValues.id = this.id;
-    this.dragValues.idx = this.idx;
-    this.notify.emit(this.dragValues);
+    this.draggable.offsetLeft = this.element.nativeElement.offsetLeft;
+    this.draggable.offsetTop = this.element.nativeElement.offsetTop;
+    this.draggable.sizeX = 400;
+    this.draggable.sizeY = 400;
+    this.draggable.idx = this.idx;
+    this.notify.emit(this.draggable);
   }
   onDragEnd(event) {
-    this.dragValues.offsetLeft = event.x;
-    this.dragValues.offsetTop = event.y;
-    this.notify.emit(this.dragValues);
+    this.draggable.offsetLeft = event.x;
+    this.draggable.offsetTop = event.y;
+    this.notify.emit(this.draggable);
   }
 
   onSizeEnd(event) {
-    this.dragValues.sizeX = event.size.height;
-    this.dragValues.sizeY = event.size.width;
-    this.notify.emit(this.dragValues);
+    this.draggable.sizeX = event.size.width;
+    this.draggable.sizeY = event.size.height;
+    this.notify.emit(this.draggable);
   }
 }
