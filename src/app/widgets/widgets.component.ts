@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {WidgetService} from '../widget.service'
+import { WidgetService } from '../widget.service'
 import { Widget } from '../widget';
 import { Router } from '@angular/router';
 
@@ -11,26 +11,26 @@ import { Router } from '@angular/router';
 export class WidgetsComponent implements OnInit {
 
   widgets: Widget[];
-  myFilter:{};
+  myFilter: {};
 
-  constructor(private widgetService:WidgetService,public router:Router) { }
+  constructor(private widgetService: WidgetService, public router: Router) { }
 
   ngOnInit() {
     this.getWidgets();
-   
+
   }
 
-  getWidgets():void{
+  getWidgets(): void {
     this.widgetService.getSavedWidgets()
-    .subscribe(widgets => this.widgets = widgets);
+      .subscribe(widgets => this.widgets = widgets);
   }
 
-  addWidget(widget:Widget):void{
-    this.widgetService.addWidget(widget);
+  addWidget(widget: Widget): void {
+    this.widgetService.addViewWidget(widget);
   }
 
-  search(search:string):void{
-    this.myFilter = {name:search};
+  search(search: string): void {
+    this.myFilter = { name: search };
   }
 
 }

@@ -1,5 +1,5 @@
-import {ViewChild, Component, OnInit, ElementRef, AfterViewInit } from '@angular/core'
-import {WidgetService} from '../widget.service';
+import { ViewChild, Component, OnInit, ElementRef, AfterViewInit } from '@angular/core'
+import { WidgetService } from '../widget.service';
 import { Widget } from '../widget';
 import { Subscription } from 'rxjs';
 
@@ -9,41 +9,39 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./dashboard.component.css'],
 })
 
-export class DashboardComponent implements OnInit{
+export class DashboardComponent implements OnInit {
 
-  widgetList:Widget[];
-  private sub:Subscription;
-  isFront:boolean;
-  
-  @ViewChild('dragBounds',{static:true}) dragBounds:ElementRef;
-  constructor(private widgetService:WidgetService) { }
+  widgetList: Widget[];
+  private sub: Subscription;
+  isFront: boolean;
+
+  @ViewChild('dragBounds', { static: true }) dragBounds: ElementRef;
+  constructor(private widgetService: WidgetService) { }
 
 
   ngOnInit() {
-    this.widgetService.refreshNeeded.subscribe(()=>{
+    this.widgetService.refreshNeeded.subscribe(() => {
       this.getWidgets();
     });
     this.getWidgets();
-    this.isFront=false;
+    this.isFront = false;
   }
 
-  getWidgets(){
-    this.sub = this.widgetService.getViewWidgets().subscribe((widgets)=>{
-      this.widgetList=widgets;
-      console.log(this.widgetList); 
+  getWidgets() {
+    this.sub = this.widgetService.getViewWidgets().subscribe((widgets) => {
+      this.widgetList = widgets;
+      console.log(this.widgetList);
     });
   }
 
-  widgetClicked(widget,indx,ref:ElementRef):void{
-    
+  widgetClicked(widget, indx, ref: ElementRef): void {
     this.widgetList.forEach(e => {
-      e.active = false; 
+      e.active = false;
     });
     widget.active = true;
-    console.log(widget);
   }
 
-  onNotify(event){
+  onDimensionsChanged(event) {
     console.log(event);
   }
 

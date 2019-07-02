@@ -22,13 +22,6 @@ export class WidgetService {
   private viewList:Widget[];
 
   private baseURL = 'http://localhost:3000/';
-  private widgetsURL = 'get-widgets';
-  private postURL = 'post-widget';
-  private saveWidgetURL = 'save-widget';
-  private getSavedWidgetsURL = 'get-saved-widgets';
-  private saveDashURL = 'save-dashboard';
-  private loadDashURL = 'load-dashboard';
-  private downloadDashURL = 'download-dashboard';
 
   get refreshNeeded(){
     return this._refreshNeeded;
@@ -56,21 +49,6 @@ export class WidgetService {
     );
   }
 
-  public addWidget(item:Widget){
-    return this.http.get<string>('http://localhost:3000/get-widget-url/',{params:{name:item.docker},headers:httpOptions.headers})
-    .subscribe((res)=>{
-      var url = 'http://localhost:'+res;
-      let returnWidget = new Widget({name:item.name,author:item.author,github:item.github,docker:item.docker,widgetURL:url});
-      this.viewList.push(returnWidget);
-      this.refreshNeeded.next();
-    });
-  }
-
-  public removeWidget(index:number){
-    this.viewList.splice(index,1);
-    this.refreshNeeded.next();
-  }
-
   public saveWidget(item:Widget):Observable<Widget>{
     return this.http.post<any>('http://localhost:3000/save-widget',item,httpOptions)
     .pipe(
@@ -85,6 +63,21 @@ export class WidgetService {
       tap(_=>console.log("got saved widgets")),
       catchError(this.handleError<Widget[]>('getSavedWidgets',[]))
     );
+  }
+
+  public addViewWidget(item:Widget){
+    return this.http.get<string>('http://localhost:3000/get-widget-url/',{params:{name:item.docker},headers:httpOptions.headers})
+    .subscribe((res)=>{
+      var url = 'http://localhost:'+res;
+      let returnWidget = new Widget({name:item.name,author:item.author,github:item.github,docker:item.docker,widgetURL:url});
+      this.viewList.push(returnWidget);
+      this.refreshNeeded.next();
+    });
+  }
+
+  public removeViewWidget(index:number){
+    this.viewList.splice(index,1);
+    this.refreshNeeded.next();
   }
 
   public getViewWidgets():Observable<Widget[]>{
