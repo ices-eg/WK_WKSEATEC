@@ -1,10 +1,5 @@
 var express = require("express");
 var router = express.Router();
-const {poolPromise} = require('../config/db');
-
-
-
-var {ssh} = require('../config/ssh');
 
 var dockerHost = require('../config/docker');
 
@@ -12,119 +7,117 @@ var data_access = require('../data_access/data_interface');
 
 
 /* GET home page. */
-router.get("/", function(req, res, next) {
+router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
 
 //Upload a widget to the Gallery
-router.post("/post-widget", async function(req, res, next) {
+router.post("/post-widget", async function (req, res, next) {
   data_access.postWidget(req.body)
-  .then(result=>{
-    dockerHost.pull(req.body.docker,(err,mystream)=>{
-      mystream.pipe(process.stdout);
+    .then(result => {
+      dockerHost.pull(req.body.docker, (err, mystream) => {
+        mystream.pipe(process.stdout);
+      });
+      res.json(result);
+    }).catch(err => {
+      console.log(err);
     });
-    res.json(result);
-  }).catch(err=>{
-    console.log(err);
-  });
 });
 
 //Get widgets to display in gallery
-router.get("/get-widgets",async function(req, res, next) {
+router.get("/get-widgets", async function (req, res, next) {
   data_access.getWidgets()
-  .then(response=>{
-    res.json(response);
-  }).catch(err=>{
-    console.log(err);
-  });  
+    .then(response => {
+      res.json(response);
+    }).catch(err => {
+      console.log(err);
+    });
 });
 
 //Save widget to personal widget tray
-router.post("/save-widget",async function(req, res, next) {
+router.post("/save-widget", async function (req, res, next) {
   data_access.saveWidget(req.body)
-  .then(response=>{
-    res.send(response);
-  }).catch(err=>{
-    console.log(err);
-  });
+    .then(response => {
+      res.send(response);
+    }).catch(err => {
+      console.log(err);
+    });
 });
 
 //Get widgets saved to tray
-router.get("/get-saved-widgets", async function(req, res, next) {
+router.get("/get-saved-widgets", async function (req, res, next) {
 
   data_access.getSavedWidgets()
-  .then(response=>{
-    console.log(response);
-    res.json(response);
-  }).catch(err=>{
-    console.log(err);
-  });  
+    .then(response => {
+      console.log(response);
+      res.json(response);
+    }).catch(err => {
+      console.log(err);
+    });
 });
 
 //Save dashboard to reuse later
-router.post("/save-dashboard", function(req, res, next) {});
+router.post("/save-dashboard", function (req, res, next) { });
 
 //Re-load saved dashboard
-router.get("/load-dashboard", function(req, res, next) {});
+router.get("/load-dashboard", function (req, res, next) { });
 
 //Download dashboard to use offline
-router.get("/download-dashboard", function(req, res, next) {});
+router.get("/download-dashboard", function (req, res, next) { });
 
-router.get("/get-widget-url/",function(req,res,next){
+router.get("/get-widget-url/", function (req, res, next) {
   var containerName = req.query.name;
   var splitNames = containerName.split(/[:/]/);
-  var name = splitNames[1];  
-  
+  var name = splitNames[1];
+
   var options = {
-    all:true,limit:1,filters:{name:[name]}
+    all: true, limit: 1, filters: { name: [name] }
   }
   //console.log(options);
-  dockerHost.listContainers(options,(err,containers)=>{
-    if(err){
+  dockerHost.listContainers(options, (err, containers) => {
+    if (err) {
       throw err;
     }
     console.log(containers);
     var containerData;
-    if(containers.length>0){
+    if (containers.length > 0) {
       containerData = containers[0];
-      if(containerData.State === "running"){
-          var container = dockerHost.getContainer(containerData.Id);
-          container.inspect((err,data)=>{
-            res.send(data.NetworkSettings.Ports["3838/tcp"][0].HostPort);
-          })
+      if (containerData.State === "running") {
+        var container = dockerHost.getContainer(containerData.Id);
+        container.inspect((err, data) => {
+          res.send(data.NetworkSettings.Ports["3838/tcp"][0].HostPort);
+        })
       }
-      else{
+      else {
         console.log("not running,lets boot her up!");
         var container = dockerHost.getContainer(containerData.Id);
-        container.start({},(err,data)=>{
-          container.inspect((err,data)=>{
+        container.start({}, (err, data) => {
+          container.inspect((err, data) => {
             res.send(data.NetworkSettings.Ports["3838/tcp"][0].HostPort);
           });
         });
       }
     }
-    else{
+    else {
       console.log("Container doesnt exist");
-      var splitNames = containerName.split(/[:/]/);      
-      var startOptions = {
-        PortBindings:{'3838/tcp':[{'HostPort':''}]}
-      }
+      var splitNames = containerName.split(/[:/]/);
 
-       var container = dockerHost.createContainer({
-        Image:containerName,
-        name:splitNames[1],
-        Tty:true,
-        ExposedPorts:{'3838/tcp':{}},
-        Volumes:{'/srv/shiny-server/data':{}},
-        HostConfig:{
-          Binds:['c:/Users/feasbur3/Documents/Bursary/data:/srv/shiny-server/data'],
-          PortBindings:{'3838/tcp':[{'HostPort':''}],
+      var container = dockerHost.createContainer({
+        Image: containerName,
+        name: splitNames[1],
+        Tty: true,
+        ExposedPorts: { '3838/tcp': {} },
+        Volumes: { '/srv/shiny-server/data': {} },
+        HostConfig: {
+          Binds: ['c:/Users/feasbur3/Documents/Bursary/data:/srv/shiny-server/data'],
+          PortBindings: {
+            '3838/tcp': [{ 'HostPort': '' }],
+          }
         }
-        }
-      }).then(container=>{
+      }).then(container => {
         return container.start();
-      }).then(container=>{
-        container.inspect((err,data)=>{
+      }).then(container => {
+        container.inspect((err, data) => {
           res.send(data.NetworkSettings.Ports["3838/tcp"][0].HostPort);
         });
       });
@@ -133,8 +126,8 @@ router.get("/get-widget-url/",function(req,res,next){
   });
 });
 
-router.get("/tests", async function(req, res, next) {
-  var container = dockerHost.getContainer('datras-qc-length-weight'); 
+router.get("/tests", async function (req, res, next) {
+  var container = dockerHost.getContainer('datras-qc-length-weight');
   /*container.inspect((err,data)=>{
     res.send();
   })*/

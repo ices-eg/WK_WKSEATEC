@@ -1,15 +1,15 @@
 let Docker = require('dockerode');
-let isWindows = process.platform ==="win32";
+let isWindows = process.platform === "win32";
 
-let options ={};
+let options = {};
 
-if(isWindows){
+if (isWindows) {
     options = {
-        protocol:'http',host:'127.0.0.1',port:'2376'
+        protocol: 'http', host: '127.0.0.1', port: '2376'
     }
-}else{
+} else {
     options = {
-        socketPath:'/var/run/docker.sock'
+        socketPath: '/var/run/docker.sock'
     }
 }
 
