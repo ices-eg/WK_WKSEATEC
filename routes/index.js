@@ -127,10 +127,7 @@ router.get("/get-widget-url/", function (req, res, next) {
 });
 
 router.get("/tests", async function (req, res, next) {
-  var container = dockerHost.getContainer('datras-qc-length-weight');
-  /*container.inspect((err,data)=>{
-    res.send();
-  })*/
+  res.send({"message":"Hi there!"});
 });
 
 module.exports = router;
