@@ -69,7 +69,7 @@ router.get("/get-widget-url/", function (req, res, next) {
   var containerName = req.query.name;
   var splitNames = containerName.split(/[:/]/);
   var name = splitNames[1];
-  var rootURL = 'http://localhost:'
+  var rootURL = 'express:3000/'
 
   var options = {
     all: true, limit: 1, filters: { name: [name] }
