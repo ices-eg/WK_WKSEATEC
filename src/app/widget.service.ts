@@ -24,7 +24,7 @@ export class WidgetService {
 
   private viewList:Draggable[];
 
-  private baseURL = 'http://localhost:3000/';
+  private baseURL = 'express:3000/';
 
   get refreshNeeded(){
     return this._refreshNeeded;
@@ -37,7 +37,7 @@ export class WidgetService {
   getWidgets(): Observable<Widget[]>{
     //return of(WIDGETS);
     console.log(this.baseURL+this.getWidgets);
-    return this.http.get<Widget[]>('http://localhost:3000/get-widgets',httpOptions)
+    return this.http.get<Widget[]>('express:3000//get-widgets',httpOptions)
     .pipe(
       tap(_=>console.log("got widgets")),
       catchError(this.handleError<Widget[]>('getWidgets',[])));
@@ -45,7 +45,7 @@ export class WidgetService {
 
    postWidget(widget:Widget):Observable<Widget>{
      console.log(widget);
-    return this.http.post<Widget>('http://localhost:3000/post-widget',widget,httpOptions)
+    return this.http.post<Widget>('express:3000//post-widget',widget,httpOptions)
     .pipe(
       tap(_=>console.log('posted')),
       catchError(this.handleError('postWidget',widget))
@@ -53,15 +53,15 @@ export class WidgetService {
   }
 
   public saveWidget(item:Widget):Observable<Widget>{
-    return this.http.post<any>('http://localhost:3000/save-widget',item,httpOptions)
+    return this.http.post<any>('express:3000//save-widget',item,httpOptions)
     .pipe(
       tap(_=>console.log("posted")),
       catchError(this.handleError('saveWidget',item))
     );
   }
-
+  
   public getSavedWidgets():Observable<Widget[]>{
-    return this.http.get<Widget[]>('http://localhost:3000/get-saved-widgets',httpOptions)
+    return this.http.get<Widget[]>('express:3000//get-saved-widgets',httpOptions)
     .pipe(
       tap(_=>console.log("got saved widgets")),
       catchError(this.handleError<Widget[]>('getSavedWidgets',[]))
@@ -69,7 +69,7 @@ export class WidgetService {
   }
 
   public addViewWidget(item:Widget){
-    return this.http.get<string>('http://localhost:3000/get-widget-url/',{params:{name:item.docker},headers:httpOptions.headers})
+    return this.http.get<string>('express:3000//get-widget-url/',{params:{name:item.docker},headers:httpOptions.headers})
     .subscribe((res)=>{
      // var url = 'http://localhost:'+res;
      var url = res;
