@@ -5,6 +5,7 @@ var dockerHost = require('../config/docker');
 
 var data_access = require('../data_access/data_interface');
 
+var HOST = process.env.HOST;
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -69,7 +70,7 @@ router.get("/api/get-widget-url/", function (req, res, next) {
   var containerName = req.query.name;
   var splitNames = containerName.split(/[:/]/);
   var name = splitNames[1];
-  var rootURL = '/api/';
+  var rootURL = 'http://'+process.env.HOST+":";
 
   var options = {
     all: true, limit: 1, filters: { name: [name] }
