@@ -12,7 +12,7 @@ router.get("/", function (req, res, next) {
 });
 
 //Upload a widget to the Gallery
-router.post("/post-widget", async function (req, res, next) {
+router.post("/api/post-widget", async function (req, res, next) {
   data_access.postWidget(req.body)
     .then(result => {
       dockerHost.pull(req.body.docker, (err, mystream) => {
@@ -25,7 +25,7 @@ router.post("/post-widget", async function (req, res, next) {
 });
 
 //Get widgets to display in gallery
-router.get("/get-widgets", async function (req, res, next) {
+router.get("/api/get-widgets", async function (req, res, next) {
   data_access.getWidgets()
     .then(response => {
       res.json(response);
@@ -35,7 +35,7 @@ router.get("/get-widgets", async function (req, res, next) {
 });
 
 //Save widget to personal widget tray
-router.post("/save-widget", async function (req, res, next) {
+router.post("/api/save-widget", async function (req, res, next) {
   data_access.saveWidget(req.body)
     .then(response => {
       res.send(response);
@@ -57,15 +57,15 @@ router.get("/get-saved-widgets", async function (req, res, next) {
 });
 
 //Save dashboard to reuse later
-router.post("/save-dashboard", function (req, res, next) { });
+router.post("/api/save-dashboard", function (req, res, next) { });
 
 //Re-load saved dashboard
-router.get("/load-dashboard", function (req, res, next) { });
+router.get("/api/load-dashboard", function (req, res, next) { });
 
 //Download dashboard to use offline
-router.get("/download-dashboard", function (req, res, next) { });
+router.get("/api/download-dashboard", function (req, res, next) { });
 
-router.get("/get-widget-url/", function (req, res, next) {
+router.get("/api/get-widget-url/", function (req, res, next) {
   var containerName = req.query.name;
   var splitNames = containerName.split(/[:/]/);
   var name = splitNames[1];
