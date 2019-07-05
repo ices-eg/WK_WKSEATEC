@@ -13,13 +13,6 @@ const httpOptions = {
   })
 };
 
-const stringhttpOptions = {
-  headers: new HttpHeaders({
-    'responseType':'text'
-  })
-}
-
-
 
 @Injectable({
   providedIn: 'root'
@@ -77,10 +70,10 @@ export class WidgetService {
   }
 
   public addViewWidget(item:Widget){
-    return this.http.get<string>('/api/get-widget-url/',{params:{name:item.docker},headers:stringhttpOptions.headers})
+    return this.http.get<any>('/api/get-widget-url/',{params:{name:item.docker},headers:httpOptions.headers})
     .subscribe((res)=>{
      // var url = 'http://localhost:'+res;
-     var url = res;
+     var url = res.url;
       let returnWidget = new Widget({name:item.name,author:item.author,github:item.github,docker:item.docker,widgetURL:url,id:item.id});
       let returnDraggable = new Draggable({offsetLeft:0,offsetTop:0,sizeX:400,sizeY:400,widget:returnWidget});
 
