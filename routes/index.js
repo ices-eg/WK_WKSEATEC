@@ -124,7 +124,9 @@ router.get("/api/get-widget-url/", function (req, res, next) {
           var port = data.NetworkSettings.Ports["3838/tcp"][0].HostPort;
           res.send(rootURL+port);
         });
-      });
+      }).catch(err=>{
+        console.log(err);
+      })
 
     }
   });
