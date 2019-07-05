@@ -71,7 +71,8 @@ export class WidgetService {
   public addViewWidget(item:Widget){
     return this.http.get<string>('http://localhost:3000/get-widget-url/',{params:{name:item.docker},headers:httpOptions.headers})
     .subscribe((res)=>{
-      var url = 'http://localhost:'+res;
+     // var url = 'http://localhost:'+res;
+     var url = res;
       let returnWidget = new Widget({name:item.name,author:item.author,github:item.github,docker:item.docker,widgetURL:url,id:item.id});
       let returnDraggable = new Draggable({offsetLeft:0,offsetTop:0,sizeX:400,sizeY:400,widget:returnWidget});
 
