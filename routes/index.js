@@ -112,7 +112,7 @@ router.get("/api/get-widget-url/", function (req, res, next) {
         ExposedPorts: { '3838/tcp': {} },
         Volumes: { '/srv/shiny-server/data': {} },
         HostConfig: {
-          Binds: ['c:/Users/feasbur3/Documents/Bursary/data:/srv/shiny-server/data'],
+          Binds: ['/home/luigi/DatrasData/:/srv/shiny-server/data'],
           PortBindings: {
             '3838/tcp': [{ 'HostPort': '' }],
           }
