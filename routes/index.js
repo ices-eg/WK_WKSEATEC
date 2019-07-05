@@ -45,7 +45,7 @@ router.post("/api/save-widget", async function (req, res, next) {
 });
 
 //Get widgets saved to tray
-router.get("/get-saved-widgets", async function (req, res, next) {
+router.get("/api/get-saved-widgets", async function (req, res, next) {
 
   data_access.getSavedWidgets()
     .then(response => {
