@@ -13,6 +13,14 @@ const httpOptions = {
   })
 };
 
+const stringhttpOptions = {
+  headers: new HttpHeaders({
+    'responseType':'text'
+  })
+}
+
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -69,7 +77,7 @@ export class WidgetService {
   }
 
   public addViewWidget(item:Widget){
-    return this.http.get<string>('/api/get-widget-url/',{params:{name:item.docker},headers:httpOptions.headers})
+    return this.http.get<string>('/api/get-widget-url/',{params:{name:item.docker},headers:stringhttpOptions.headers})
     .subscribe((res)=>{
      // var url = 'http://localhost:'+res;
      var url = res;
