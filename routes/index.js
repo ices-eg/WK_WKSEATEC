@@ -69,7 +69,7 @@ router.get("/get-widget-url/", function (req, res, next) {
   var containerName = req.query.name;
   var splitNames = containerName.split(/[:/]/);
   var name = splitNames[1];
-  var rootURL = '/api/';
+  var rootURL = '/';
 
   var options = {
     all: true, limit: 1, filters: { name: [name] }
