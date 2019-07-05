@@ -69,6 +69,7 @@ router.get("/get-widget-url/", function (req, res, next) {
   var containerName = req.query.name;
   var splitNames = containerName.split(/[:/]/);
   var name = splitNames[1];
+  var rootURL = 'http://localhost:'
 
   var options = {
     all: true, limit: 1, filters: { name: [name] }
@@ -85,7 +86,8 @@ router.get("/get-widget-url/", function (req, res, next) {
       if (containerData.State === "running") {
         var container = dockerHost.getContainer(containerData.Id);
         container.inspect((err, data) => {
-          res.send(data.NetworkSettings.Ports["3838/tcp"][0].HostPort);
+          var port = data.NetworkSettings.Ports["3838/tcp"][0].HostPort;
+          res.send(rootURL+port);
         })
       }
       else {
@@ -93,7 +95,8 @@ router.get("/get-widget-url/", function (req, res, next) {
         var container = dockerHost.getContainer(containerData.Id);
         container.start({}, (err, data) => {
           container.inspect((err, data) => {
-            res.send(data.NetworkSettings.Ports["3838/tcp"][0].HostPort);
+            var port = data.NetworkSettings.Ports["3838/tcp"][0].HostPort;
+            res.send(rootURL+port);
           });
         });
       }
@@ -118,7 +121,8 @@ router.get("/get-widget-url/", function (req, res, next) {
         return container.start();
       }).then(container => {
         container.inspect((err, data) => {
-          res.send(data.NetworkSettings.Ports["3838/tcp"][0].HostPort);
+          var port = data.NetworkSettings.Ports["3838/tcp"][0].HostPort;
+          res.send(rootURL+port);
         });
       });
 
