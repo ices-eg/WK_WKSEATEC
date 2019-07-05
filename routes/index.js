@@ -82,27 +82,31 @@ router.get("/api/get-widget-url/", function (req, res, next) {
     }
     console.log(containers);
     var containerData;
+    //Does a container exist for this image?
     if (containers.length > 0) {
       containerData = containers[0];
+      //Is the container running already?
       if (containerData.State === "running") {
         var container = dockerHost.getContainer(containerData.Id);
         container.inspect((err, data) => {
           var port = data.NetworkSettings.Ports["3838/tcp"][0].HostPort;
-          res.send(rootURL+port);
+          console.log(rootURL+port);
+          res.json({url:rootURL+port});
         })
       }
-      else {
+      else {//container isn't running
         console.log("not running,lets boot her up!");
         var container = dockerHost.getContainer(containerData.Id);
         container.start({}, (err, data) => {
           container.inspect((err, data) => {
             var port = data.NetworkSettings.Ports["3838/tcp"][0].HostPort;
-            res.send(rootURL+port);
+            console.log(rootURL+port);
+            res.json({url:rootURL+port});
           });
         });
       }
     }
-    else {
+    else {//container doesn't exist
       console.log("Container doesnt exist");
       var splitNames = containerName.split(/[:/]/);
 
@@ -123,7 +127,8 @@ router.get("/api/get-widget-url/", function (req, res, next) {
       }).then(container => {
         container.inspect((err, data) => {
           var port = data.NetworkSettings.Ports["3838/tcp"][0].HostPort;
-          res.send(rootURL+port);
+          console.log(rootURL+port);
+          res.json({url:rootURL+port});
         });
       }).catch(err=>{
         console.log(err);
