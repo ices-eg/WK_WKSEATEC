@@ -16,7 +16,7 @@ function sleep(ms){
 }
 
 async function checkReach(url,ms){
-  var isReachable = reachable(url);
+  var isReachable = await reachable(url);
   if(!isReachable){
     setTimeout(checkReach,ms);
   }
