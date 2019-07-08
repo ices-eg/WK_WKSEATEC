@@ -55,6 +55,6 @@ export class DraggableComponent implements OnInit, AfterViewInit {
   }
 
   onLoadFrame(iFrame){
-    console.log(iFrame);
+    console.log((iFrame.contentWindow || iFrame.contentDocument))
   }
 }
