@@ -9,6 +9,22 @@ const reachable = require('is-reachable');
 
 var HOST = process.env.HOST;
 
+function sleep(ms){
+  return new Promise(resolve=>{
+    setTimeout(resolve,ms);
+  })
+}
+
+async function checkReach(url,ms){
+  var isReachable = reachable(url);
+  if(!isReachable){
+    setTimeout(checkReach,ms);
+  }
+  else{
+    return true;
+  }
+}
+
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
@@ -93,8 +109,11 @@ router.get("/api/get-widget-url/", function (req, res, next) {
         container.inspect((err, data) => {
           var port = data.NetworkSettings.Ports["3838/tcp"][0].HostPort;
           console.log(rootURL+port);
-          res.json({url:rootURL+port});
-        })
+          var url = rootURL+port;
+          checkReach(url,100).then(bool=>{
+              res.json({url:url});
+          });
+        }) 
       }
       else {//container isn't running
         console.log("not running,lets boot her up!");
@@ -103,7 +122,10 @@ router.get("/api/get-widget-url/", function (req, res, next) {
           container.inspect((err, data) => {
             var port = data.NetworkSettings.Ports["3838/tcp"][0].HostPort;
             console.log(rootURL+port);
-            res.json({url:rootURL+port});
+            var url = rootURL+port;
+          checkReach(url,100).then(bool=>{
+              res.json({url:url});
+          });
           });
         });
       }
@@ -130,8 +152,9 @@ router.get("/api/get-widget-url/", function (req, res, next) {
         container.inspect((err, data) => {
           var port = data.NetworkSettings.Ports["3838/tcp"][0].HostPort;
           var url = rootURL+port;
-          console.log(await reachable(url));
-          res.json({url:url});
+          checkReach(url,100).then(bool=>{
+              res.json({url:url});
+          });
         });
       }).catch(err=>{
         console.log(req);
