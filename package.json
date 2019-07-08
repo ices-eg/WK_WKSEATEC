@@ -11,6 +11,7 @@
     "dockerode": "^2.5.8",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
+    "is-reachable": "^3.1.0",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
     "mssql": "^5.1.0",

@@ -5,6 +5,8 @@ var dockerHost = require('../config/docker');
 
 var data_access = require('../data_access/data_interface');
 
+const reachable = require('is-reachable');
+
 var HOST = process.env.HOST;
 
 /* GET home page. */
@@ -127,10 +129,14 @@ router.get("/api/get-widget-url/", function (req, res, next) {
       }).then(container => {
         container.inspect((err, data) => {
           var port = data.NetworkSettings.Ports["3838/tcp"][0].HostPort;
-          console.log(rootURL+port);
+          var url = rootURL+port;
+          reachable(url).then(res=>{
+            console.log(res);
+          });
           res.json({url:rootURL+port});
         });
       }).catch(err=>{
+        console.log(req);
         console.log(err);
       })
 
