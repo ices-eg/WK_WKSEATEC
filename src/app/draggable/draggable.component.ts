@@ -53,4 +53,8 @@ export class DraggableComponent implements OnInit, AfterViewInit {
     this.draggable.sizeY = event.size.height;
     this.notify.emit(this.draggable);
   }
+
+  onLoadFrame(iFrame){
+    console.log(iFrame);
+  }
 }
