@@ -5,5 +5,5 @@
     <h6>Click to Drag</h6>
     <a class="remove" (click)="remove()">&times;</a>
   </div>
-  <iframe #iFrame (onerror)="oniFrameError($event)" (load)="onLoadFrame(iFrame)" class="resp-iframe" [src]="urlSource | safe"></iframe>
+  <iframe #iFrame (error)="oniFrameError($event)" (load)="onLoadFrame(iFrame)" class="resp-iframe" [src]="urlSource | safe"></iframe>
 </div>
