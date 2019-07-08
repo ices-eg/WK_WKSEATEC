@@ -130,10 +130,8 @@ router.get("/api/get-widget-url/", function (req, res, next) {
         container.inspect((err, data) => {
           var port = data.NetworkSettings.Ports["3838/tcp"][0].HostPort;
           var url = rootURL+port;
-          reachable(url).then(res=>{
-            console.log(res);
-          });
-          res.json({url:rootURL+port});
+          console.log(await reachable(url));
+          res.json({url:url});
         });
       }).catch(err=>{
         console.log(req);
