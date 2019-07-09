@@ -83,8 +83,9 @@ router.get("/api/get-saved-widgets", async function (req, res, next) {
 router.post("/api/save-dashboard", function (req, res, next) { 
   var jsonData = req.body;
   var stringData = JSON.stringify(jsonData);
-  var filePath = __dirname+'/public/test.json';
+  var filePath = __dirname;
   fs.writeFile(filePath,stringData, function(err){
+    console.log(filePath);
     if(err){
       console.log(err);
       res.status(404).send('File not saved');
