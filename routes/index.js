@@ -7,6 +7,8 @@ var data_access = require('../data_access/data_interface');
 
 const reachable = require('is-reachable');
 
+const fs = require('fs');
+
 var HOST = process.env.HOST;
 
 function sleep(ms){
@@ -76,7 +78,14 @@ router.get("/api/get-saved-widgets", async function (req, res, next) {
 });
 
 //Save dashboard to reuse later
-router.post("/api/save-dashboard", function (req, res, next) { });
+router.post("/api/save-dashboard", function (req, res, next) { 
+  var jsonData = req.body;
+  var stringData = JSON.stringify(jsonData);
+
+  fs.writeFile("test.json",jsonContent,'utf8',function(err){
+    
+  })
+});
 
 //Re-load saved dashboard
 router.get("/api/load-dashboard", function (req, res, next) { });
@@ -162,7 +171,7 @@ router.get("/api/get-widget-url/", function (req, res, next) {
       })
 
     }
-  });
+  }); 
 });
 
 router.get("/tests", async function (req, res, next) {
