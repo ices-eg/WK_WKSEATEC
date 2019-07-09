@@ -83,7 +83,12 @@ router.post("/api/save-dashboard", function (req, res, next) {
   var stringData = JSON.stringify(jsonData);
 
   fs.writeFile("test.json",jsonContent,'utf8',function(err){
-    
+    if(err){
+      console.log(err);
+    }
+    else{
+      console.log("File is ok");
+    }
   }).then(file=>{
     res.send("Ok!");
   })
