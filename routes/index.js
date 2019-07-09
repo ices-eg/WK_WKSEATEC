@@ -83,7 +83,7 @@ router.get("/api/get-saved-widgets", async function (req, res, next) {
 router.post("/api/save-dashboard", function (req, res, next) { 
   var jsonData = req.body;
   var stringData = JSON.stringify(jsonData);
-  var filePath = path.normalize('/usr/src/app/public');
+  var filePath = path.normalize('/usr/src/app/public/test.json');
   fs.writeFile(filePath,stringData, 'utf8',function(err){
     console.log(filePath);
     if(err){
