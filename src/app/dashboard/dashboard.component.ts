@@ -49,6 +49,7 @@ export class DashboardComponent implements OnInit {
 
   downloadDashboard(){
     this.widgetService.postDashboard(this.widgetViewList).subscribe(dashboard=>{
+      console.log(dashboard);
       saveAs(dashboard);
     },err=>{
       alert('Problem downloading file');
