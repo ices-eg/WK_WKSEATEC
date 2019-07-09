@@ -7,6 +7,8 @@ var data_access = require('../data_access/data_interface');
 
 const reachable = require('is-reachable');
 
+const path = require('path');
+
 const fs = require('fs');
 
 var HOST = process.env.HOST;
@@ -81,17 +83,15 @@ router.get("/api/get-saved-widgets", async function (req, res, next) {
 router.post("/api/save-dashboard", function (req, res, next) { 
   var jsonData = req.body;
   var stringData = JSON.stringify(jsonData);
-
-  fs.writeFile("test.json",stringData,'utf8',function(err){
+  var filePath = __dirname+'/public/test.json';
+  fs.writeFile(filePath,stringData, function(err){
     if(err){
-      console.log(err);
+      res.status(404).send('File not saved');
+      return;
+    }else{
+      res.send('Dashboard saved');
     }
-    else{
-      console.log("File is ok");
-    }
-  }).then(file=>{
-    res.send("Ok!");
-  })
+  });
 });
 
 //Re-load saved dashboard
