@@ -91,7 +91,7 @@ router.post("/api/save-dashboard", function (req, res, next) {
       res.status(404).send('File not saved');
       return;
     }else{
-      res.send('Dashboard saved');
+      res.download(filePath);
     }
   });
 });
