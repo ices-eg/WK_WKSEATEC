@@ -86,6 +86,7 @@ router.post("/api/save-dashboard", function (req, res, next) {
   var filePath = __dirname+'/public/test.json';
   fs.writeFile(filePath,stringData, function(err){
     if(err){
+      console.log(err);
       res.status(404).send('File not saved');
       return;
     }else{
