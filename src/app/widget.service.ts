@@ -91,8 +91,8 @@ export class WidgetService {
     return of(this.viewList);
   }
 
-  public postDashboard(dashboard:Draggable[]){
-    return this.http.post<Draggable[]>('/api/save-dashboard',dashboard,httpOptions)
+  public postDashboard(dashboard:Draggable[]):Observable<any>{
+    return this.http.post<Draggable[]>('/api/save-dashboard',dashboard,{responseType:'json', headers:new HttpHeaders().append("Content-Type","application/json")})
     .pipe(
       tap(_=>console.log("Dashboard posted")),
       catchError(this.handleError('postDashboard',dashboard))

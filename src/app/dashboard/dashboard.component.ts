@@ -3,6 +3,7 @@ import { WidgetService } from '../widget.service';
 import { Widget } from '../widget';
 import { Subscription } from 'rxjs';
 import { Draggable } from '../Draggable';
+import {saveAs} from 'file-saver';
 
 @Component({
   selector: 'app-dashboard',
@@ -47,7 +48,12 @@ export class DashboardComponent implements OnInit {
   }
 
   downloadDashboard(){
-    this.widgetService.postDashboard(this.widgetViewList).subscribe(dashboard=>console.log(dashboard));
+    this.widgetService.postDashboard(this.widgetViewList).subscribe(dashboard=>{
+      saveAs(dashboard);
+    },err=>{
+      alert('Problem downloading file');
+      console.error(err);
+    });
   }
 
 }
