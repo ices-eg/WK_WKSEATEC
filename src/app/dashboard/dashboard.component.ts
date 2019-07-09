@@ -46,4 +46,8 @@ export class DashboardComponent implements OnInit {
     console.log(event);
   }
 
+  downloadDashboard(){
+    this.widgetService.postDashboard(this.widgetViewList).subscribe(dashboard=>console.log(dashboard));
+  }
+
 }

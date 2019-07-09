@@ -23,6 +23,14 @@ ul{
 ul li{
     position: absolute;
 }
+button{
+    margin: 1rem 2rem 0 0;
+    background-color: rgb(16, 130, 158);
+    color: #fff!important;
+}
+button:hover{
+    background-color: #095A6E;
+}
 .active{
     z-index: 100;
 }

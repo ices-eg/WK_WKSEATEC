@@ -91,6 +91,14 @@ export class WidgetService {
     return of(this.viewList);
   }
 
+  public postDashboard(dashboard:Draggable[]){
+    return this.http.post<Draggable[]>('/api/save-dashboard',dashboard,httpOptions)
+    .pipe(
+      tap(_=>console.log("Dashboard posted")),
+      catchError(this.handleError('postDashboard',dashboard))
+    );
+  }
+
   private handleError<T>(operation = 'operation',result?:T){
     return(error:any):Observable<T>=>{
       console.log(error);
