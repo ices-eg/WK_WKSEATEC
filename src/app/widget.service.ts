@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Widget} from './widget';
 import {WIDGETS} from './mock-widgets';
 import { Observable,of, Subject, BehaviorSubject, Subscription} from 'rxjs';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {catchError,map,tap} from 'rxjs/operators';
 import { Draggable } from './Draggable';
 
@@ -12,6 +12,19 @@ const httpOptions = {
     
   })
 };
+
+/*const dashboardHTTPOptions = {
+  headers?:HttpHeaders,
+  observe?:'body',
+  params?:HttpParams,
+  reportProgress?:boolean,
+  responseType:'text',
+  withCredentials?:boolean
+} = {
+  headers:httpOptions.headers,
+  params: new HttpParams(),
+  responseType:'blob'
+}*/
 
 
 @Injectable({
@@ -92,7 +105,7 @@ export class WidgetService {
   }
 
   public postDashboard(dashboard:Draggable[]):Observable<any>{
-    return this.http.get<Draggable[]>('/api/save-dashboard',dashboard,{responseType:'json', headers:new HttpHeaders().append("Content-Type","application/json")})
+    return this.http.post('/api/save-dashboard',dashboard,{responseType:'blob', headers:new HttpHeaders().append("Content-Type","application/json")})
     .pipe(
       tap(_=>console.log("Dashboard posted")),
       catchError(this.handleError('postDashboard',dashboard))
