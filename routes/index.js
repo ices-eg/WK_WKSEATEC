@@ -80,7 +80,7 @@ router.get("/api/get-saved-widgets", async function (req, res, next) {
 });
 
 //Save dashboard to reuse later
-router.post("/api/save-dashboard", function (req, res, next) { 
+router.get("/api/save-dashboard", function (req, res, next) { 
   var jsonData = req.body;
   var stringData = JSON.stringify(jsonData);
   var filePath = path.normalize('/usr/src/app/public/test.json');
