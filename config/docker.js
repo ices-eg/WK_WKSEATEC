@@ -12,14 +12,16 @@ console.log(process.env.HOST);
 
 if (isWindows) {
     options = {
-        protocol: 'http', host: '127.0.0.1', port: '2376'
+        protocol: 'http', host: '127.0.0.1', port: '2375'
     }
 } else if(!config.config.isOffline){
     options = {
         socketPath: '/var/run/docker.sock'
     }
 }else{
-    //for running locally
+    options = {
+        protocol: 'http', host: '192.168.0.1', port: '2375'
+    }
 }
 
 module.exports = new Docker(options);

@@ -13,6 +13,8 @@ const fs = require('fs');
 
 var HOST = process.env.HOST;
 
+const JSZip = require('jszip');
+
 function sleep(ms){
   return new Promise(resolve=>{
     setTimeout(resolve,ms);
@@ -84,16 +86,30 @@ router.post("/api/save-dashboard", function (req, res, next) {
   var jsonData = req.body;
   var stringData = JSON.stringify(jsonData);
   var filePath = path.normalize('/usr/src/app/public/test.json');
-  fs.writeFile(filePath,stringData, 'utf8',function(err){
-    console.log(filePath);
-    if(err){
-      console.log(err);
-      res.status(404).send('File not saved');
-      return;
-    }else{
-      res.sendFile(filePath);
-    }
-  });
+    /* fs.writeFile(filePath,stringData, 'utf8',function(err){
+      console.log(filePath);
+      if(err){
+        console.log(err);
+        res.status(404).send('File not saved');
+        return;
+      }else{
+        res.sendFile(filePath);
+      }
+    }); */
+
+    var configData = fs.readFileSync(process.cwd()+'/public/config/config.json','utf8');
+    var composeData = fs.readFileSync(process.cwd()+'/public/compose/docker-compose.yml','utf8');
+
+    var zip = new JSZip();
+    zip.file("docker-compose.yml",composeData)
+    var dataFolder = zip.folder("data");
+    //dataFolder.file(); add sample data,TODO
+    var configFolder = zip.folder("config");
+    configFolder.file("config.json",configData);
+
+    zip.generateAsync({type:'blob'}).then((content)=>{
+      res.sendFile(content);
+    })
 });
 
 //Re-load saved dashboard
