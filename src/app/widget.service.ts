@@ -105,7 +105,7 @@ export class WidgetService {
   }
 
   public postDashboard(dashboard:Draggable[]):Observable<any>{
-    return this.http.post('/api/save-dashboard',dashboard,{responseType:'blob', headers:new HttpHeaders().append("Content-Type","application/json")})
+    return this.http.post('/api/save-dashboard',dashboard,{responseType:'arraybuffer', headers:new HttpHeaders().append("Content-Type","application/json")})
     .pipe(
       tap(_=>console.log("Dashboard posted")),
       catchError(this.handleError('postDashboard',dashboard))
