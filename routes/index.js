@@ -13,9 +13,8 @@ const fs = require('fs');
 
 var HOST = process.env.HOST;
 
-const JSZip = require('jszip');
+const Archiver = require('archiver');
 
-const temp = require('tmp');
 
 function sleep(ms){
   return new Promise(resolve=>{
@@ -102,16 +101,14 @@ router.post("/api/save-dashboard", function (req, res, next) {
     var configData = fs.readFileSync(process.cwd()+'/public/config/config.json','utf8');
     var composeData = fs.readFileSync(process.cwd()+'/public/compose/docker-compose.yml','utf8');
 
-    var zip = new JSZip();
-    zip.file("docker-compose.yml",composeData)
-    var dataFolder = zip.folder("data");
-    //dataFolder.file(); add sample data,TODO
-    var configFolder = zip.folder("config");
-    configFolder.file("config.json",configData);
+   var zip = Archiver('zip');
 
-    zip.generateAsync({type:'nodebuffer'}).then((content)=>{
-      res.pipe(content);
-    })
+   zip.pipe(res);
+
+   zip.file(path.normalize(process.cwd()+'/public/config/config.json'),{name:'config/config.json'})
+   .file(path.normalize(process.cwd()+'/public/compose/docker-compose.yml'),{name:'docker-compose.yml'})
+   .finalize();
+    
 });
 
 //Re-load saved dashboard
