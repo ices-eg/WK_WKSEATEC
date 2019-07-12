@@ -110,15 +110,7 @@ router.post("/api/save-dashboard", function (req, res, next) {
     configFolder.file("config.json",configData);
 
     zip.generateAsync({type:'nodebuffer'}).then((content)=>{
-      temp.file(function _tempFileCreated(err,path,fd,cleanupCallback){
-        if(err){
-          console.log(err);
-        }
-
-        res.sendFile(path);
-
-        cleanupCallback();
-      })
+      res.pipe(content);
     })
 });
 
