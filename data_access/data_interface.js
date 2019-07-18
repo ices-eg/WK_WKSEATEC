@@ -2,7 +2,7 @@ var sql_access = require('../data_access/sql_access');
 var json_access = require('../data_access/json_access')
 var config = require('./config_reader');
 const path = require('path');
-const filepath =path.normalize(process.cwd()+'/data/data.json');
+const filepath =path.normalize(process.cwd()+'/dashboard/data.json');
 
 
 async function getWidgets() {

@@ -13,6 +13,10 @@ const fs = require('fs');
 
 var HOST = process.env.HOST;
 
+var PWD = process.env.PWD;
+
+const dataDir = path.normalize(PWD+'/data');
+
 const Archiver = require('archiver');
 
 
@@ -94,7 +98,7 @@ router.post("/api/save-dashboard", function (req, res, next) {
    zip.file(path.normalize(process.cwd()+'/public/config/config.json'),{name:'config/config.json'})
    .file(path.normalize(process.cwd()+'/public/compose/docker-compose.yml'),{name:'docker-compose.yml'})
    .file(path.normalize(process.cwd()+'/public/batch/start_gallery.bat'),{name:'start_gallery.bat'})
-   .append(stringData,{name:'data/data.json'})
+   .append(stringData,{name:'dashboard/data.json'})
    .finalize();
     
 });
@@ -162,7 +166,7 @@ router.get("/api/get-widget-url/", function (req, res, next) {
         ExposedPorts: { '3838/tcp': {} },
         Volumes: { '/srv/shiny-server/data': {} },
         HostConfig: {
-          Binds: ['/home/luigi/DatrasData/:/srv/shiny-server/data'],
+          Binds: [dataDir+':/srv/shiny-server/data'],
           PortBindings: {
             '3838/tcp': [{ 'HostPort': '' }],
           }
