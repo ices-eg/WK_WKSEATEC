@@ -19,8 +19,8 @@ services:
       DOCKER: tcp://192.168.0.1:2375
       PWD: "null:${PWD:?err}"
     volumes:
-      - ./config:/config
-      - ./dashboard:/data
+      - ./config:/usr/src/app/config
+      - ./dashboard:/usr/src/app/data
 
 networks: 
   gallerynet:
