@@ -86,27 +86,15 @@ router.get("/api/get-saved-widgets", async function (req, res, next) {
 router.post("/api/save-dashboard", function (req, res, next) { 
   var jsonData = req.body;
   var stringData = JSON.stringify(jsonData);
-  var filePath = path.normalize('/usr/src/app/public/test.json');
-    /* fs.writeFile(filePath,stringData, 'utf8',function(err){
-      console.log(filePath);
-      if(err){
-        console.log(err);
-        res.status(404).send('File not saved');
-        return;
-      }else{
-        res.sendFile(filePath);
-      }
-    }); */
-
-    var configData = fs.readFileSync(process.cwd()+'/public/config/config.json','utf8');
-    var composeData = fs.readFileSync(process.cwd()+'/public/compose/docker-compose.yml','utf8');
 
    var zip = Archiver('zip');
 
    zip.pipe(res);
-
+  
    zip.file(path.normalize(process.cwd()+'/public/config/config.json'),{name:'config/config.json'})
    .file(path.normalize(process.cwd()+'/public/compose/docker-compose.yml'),{name:'docker-compose.yml'})
+   .file(path.normalize(process.cwd()+'/public/batch/start_gallery.bat'),{name:'start_gallery.bat'})
+   .append(stringData,{name:'data/data.json'})
    .finalize();
     
 });
