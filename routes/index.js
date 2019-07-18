@@ -16,6 +16,7 @@ var HOST = process.env.HOST;
 var PWD = process.env.PWD;
 
 const dataDir = path.normalize(PWD+'/data');
+console.log(dataDir);
 
 const Archiver = require('archiver');
 
