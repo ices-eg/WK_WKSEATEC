@@ -15,7 +15,7 @@ var HOST = process.env.HOST;
 
 var PWD = process.env.PWD;
 
-const dataDir = path.normalize(PWD+'/data');
+var dataDir = path.normalize(PWD+'/data');
 dataDir.substring(2);
 dataDir = 'c:'+dataDir;
 
