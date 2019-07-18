@@ -11,4 +11,4 @@ docker-compose pull && docker-compose up
 
 start "" http://localhost:4200
 
-
+pause
