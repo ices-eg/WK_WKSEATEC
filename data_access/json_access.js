@@ -13,7 +13,7 @@ async function getWidgets(path) {
       let data = JSON.parse(content);
       console.log(data);
       for(var i = 0;i<data.widgets.length;i++){
-         widgets.push(data.widgets[i]);
+         widgets.push(data.widgets[i].widget);
       }
       var res = {widgets:widgets};
       console.log(res);
@@ -31,11 +31,17 @@ async function getWidgets(path) {
 
 async function getSavedWidgets(path) {
    try {
-      let content = await readFile(path,'utf8');
+      var widgets = [];
+      let content = await readFile(path);
       console.log(content);
       let data = JSON.parse(content);
       console.log(data);
-      return data.widgets.widget;
+      for(var i = 0;i<data.widgets.length;i++){
+         widgets.push(data.widgets[i].widget);
+      }
+      var res = {widgets:widgets};
+      console.log(res);
+      return res;
    } catch (e) {
       console.log(e);
    }
