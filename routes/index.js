@@ -62,7 +62,8 @@ router.post("/api/post-widget", async function (req, res, next) {
 //Get widgets to display in gallery
 router.get("/api/get-widgets", async function (req, res, next) {
   data_access.getWidgets()
-    .then(response => {
+    .then((response)=> {
+      console.log(response);
       res.json(response);
     }).catch(err => {
       console.log(err);
@@ -83,7 +84,7 @@ router.post("/api/save-widget", async function (req, res, next) {
 router.get("/api/get-saved-widgets", async function (req, res, next) {
 
   data_access.getSavedWidgets()
-    .then(response => {
+    .then((response) => {
       console.log(response);
       res.json(response);
     }).catch(err => {
