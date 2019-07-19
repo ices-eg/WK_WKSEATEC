@@ -6,20 +6,30 @@ const readFile = util.promisify(fs.readFile);
 
 
 async function getWidgets(path){
-   let content = await readFile(path).then(res=>console.log(res))
+   /* let content = await readFile(path).then(res=>console.log(res))
    .catch(err=>console.log(err));
    console.log(content);
    let data = JSON.parse(content);
 
-   return data.widgets.widget;
+   return data.widgets.widget; */
+   fs.readFile(path),(err,data)=>{
+      if(err) throw err;
+      let data = JSON.parse(data);
+      return data.widgets.widget;
+   }
 }
 
 async function getSavedWidgets(path){
-    let content = await readFile(path).then(res=>console.log(res))
+    /* let content = await readFile(path).then(res=>console.log(res))
     .catch(err=>console.log(err));
     let data = JSON.parse(content.toString());
    
-    return data.widgets.widget;
+    return data.widgets.widget; */
+    fs.readFile(path),(err,data)=>{
+      if(err) throw err;
+      let data = JSON.parse(data);
+      return data.widgets.widget;
+   }
  }
 
  async function postWidget(path){
