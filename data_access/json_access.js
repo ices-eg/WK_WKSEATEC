@@ -14,8 +14,8 @@ async function getWidgets(path){
    return data.widgets.widget; */
    fs.readFile(path),(err,data)=>{
       if(err) throw err;
-      let data = JSON.parse(data);
-      return data.widgets.widget;
+      let  res = JSON.parse(data);
+      return res.widgets.widget;
    }
 }
 
@@ -27,8 +27,8 @@ async function getSavedWidgets(path){
     return data.widgets.widget; */
     fs.readFile(path),(err,data)=>{
       if(err) throw err;
-      let data = JSON.parse(data);
-      return data.widgets.widget;
+      let res = JSON.parse(data);
+      return res.widgets.widget;
    }
  }
 
