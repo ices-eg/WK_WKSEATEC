@@ -14,7 +14,7 @@ async function getWidgets(path) {
          widgets.push(data.widgets[i].widget);
       }
       var res = {widgets:widgets};
-      return res;
+      return res.widgets;
    } catch (e) {
       console.log(e);
    }
@@ -35,7 +35,7 @@ async function getSavedWidgets(path) {
          widgets.push(data.widgets[i].widget);
       }
       var res = {widgets:widgets};
-      return res;
+      return res.widgets;
    } catch (e) {
       console.log(e);
    }
