@@ -18,7 +18,7 @@ async function getSavedWidgets(path){
     .catch(err=>console.log(err));
     let data = JSON.parse(content);
    
-    return data.widgets;
+    return data.widgets.widget;
  }
 
  async function postWidget(path){
