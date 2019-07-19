@@ -17,7 +17,7 @@ services:
     environment:    
       HOST: 192.168.0.1
       DOCKER: tcp://192.168.0.1:2375
-      PWD: "null:${PWD:?err}"
+      PWD: "null:${DIR:?err}"
     volumes:
       - ./config/:/usr/src/app/mounts/config/
       - ./dashboard/:/usr/src/app/dashboard/

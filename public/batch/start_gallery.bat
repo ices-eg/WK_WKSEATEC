@@ -3,7 +3,7 @@ docker network create -d bridge --subnet 192.168.0.0/24 --gateway 192.168.0.1 ga
 
 
 
-set PWD=%cd%
+set DIR=%cd%
 
 set COMPOSE_CONVERT_WINDOWS_PATHS=1
 

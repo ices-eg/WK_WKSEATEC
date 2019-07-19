@@ -13,9 +13,9 @@ const fs = require('fs');
 
 var HOST = process.env.HOST;
 
-var PWD = process.env.PWD;
+var DIR = process.env.DIR;
 
-var dataDir = path.normalize(PWD+'/data').substr(1);
+var dataDir = path.normalize(DIR+'/data').substr(1);
 
 dataDir = 'c:/'+dataDir;
 
