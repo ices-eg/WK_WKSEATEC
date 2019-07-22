@@ -120,6 +120,10 @@ router.post("/api/save-dashboard", function (req, res, next) {
   zip.file(path.normalize(process.cwd() + '/public/config/config.json'), { name: 'config/config.json' })
     .append(composeData, { name: 'docker-compose.yml' })
     .file(path.normalize(process.cwd() + '/public/batch/start_gallery.bat'), { name: 'start_gallery.bat' })
+    .file(path.normalize(process.cwd()+'/data/myFilters.csv'),{name:'data/myFilters.csv'})
+    .file(path.normalize(process.cwd()+'/data/filteredData.rds'),{name:'data/filteredData.rds'})
+    .file(path.normalize(process.cwd()+'/data/Exchange.zip'),{name:'data/Exchange.zip'})
+    .file(path.normalize(process.cwd()+'/data/DATRAS_Exchange_Data.csv'),{name:'data/DATRAS_Exchange_Data.csv'})
     .append(stringData, { name: 'dashboard/data.json' })
     .finalize();
 
