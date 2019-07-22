@@ -25,13 +25,13 @@ if (isWindows) {
         if(err){
             console.log(err);
         }
-
+        options = {
+            protocol: 'http', host: addresses, port: '2375'
+        }
         console.log(addresses);
         console.log(family);
     })
-    options = {
-        protocol: 'http', host: 'host.docker.internal', port: '2375'
-    }
+    
     console.log(options);
 }
 
