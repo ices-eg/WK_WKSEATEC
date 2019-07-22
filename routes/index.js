@@ -130,7 +130,8 @@ router.get("/api/get-widget-url/", function (req, res, next) {
   //console.log(options);
   dockerHost.listContainers(options, (err, containers) => {
     if (err) {
-      throw err;
+      console.log(err);
+      console.log("Can't find image with that name")
     }
     console.log(containers);
     var containerData;
