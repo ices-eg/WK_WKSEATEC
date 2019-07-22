@@ -1,5 +1,5 @@
 let Docker = require('dockerode');
-let dns = require('dns');
+let dns = require('dns-sync');
 var config =require('../data_access/config_reader');
 let isWindows = process.platform === "win32";
 
@@ -21,17 +21,9 @@ if (isWindows) {
     }
     console.log(options);
 }else{
-    dns.lookup('host.docker.internal',(err,addresses,family)=>{
-        if(err){
-            console.log(err);
-        }
-        options = {
-            protocol: 'http', host: addresses, port: '2375'
-        }
-        console.log(addresses);
-        console.log(family);
-    })
-    
+    options = {
+        protocol: 'http', host: dns.resolve('host.docker.internal'), port: '2375'
+    }
     console.log(options);
 }
 
