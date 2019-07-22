@@ -7,7 +7,6 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const sql = require('mssql');
-var data_access = require('../data_access/data_interface');
 
 var app = express();
 
@@ -27,13 +26,6 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 
-data_access.getWidgets().then((response)=>{
-  response.forEach(image => {
-    dockerHost.pull(image.docker, (err, mystream) => {
-      mystream.pipe(process.stdout);
-    });
-  });
-})
 
 
 // catch 404 and forward to error handler

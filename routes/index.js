@@ -15,7 +15,7 @@ var HOST = process.env.HOST;
 
 var DIR = process.env.DIR;
 
-var dataDir = path.normalize(DIR+'/data');
+var dataDir = path.normalize(DIR + '/data');
 
 
 console.log(dataDir);
@@ -23,18 +23,18 @@ console.log(dataDir);
 const Archiver = require('archiver');
 
 
-function sleep(ms){
-  return new Promise(resolve=>{
-    setTimeout(resolve,ms);
+function sleep(ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms);
   })
 }
 
-async function checkReach(url,ms){
+async function checkReach(url, ms) {
   var isReachable = await reachable(url);
-  if(!isReachable){
-    setTimeout(checkReach,ms);
+  if (!isReachable) {
+    setTimeout(checkReach, ms);
   }
-  else{
+  else {
     return true;
   }
 }
@@ -60,7 +60,7 @@ router.post("/api/post-widget", async function (req, res, next) {
 //Get widgets to display in gallery
 router.get("/api/get-widgets", async function (req, res, next) {
   data_access.getWidgets()
-    .then((response)=> {
+    .then((response) => {
       console.log(response);
       res.json(response);
     }).catch(err => {
@@ -91,23 +91,23 @@ router.get("/api/get-saved-widgets", async function (req, res, next) {
 });
 
 //Save dashboard to reuse later
-router.post("/api/save-dashboard", function (req, res, next) { 
+router.post("/api/save-dashboard", function (req, res, next) {
   var jsonData = req.body;
   var data = {
     widgets: jsonData
   }
   var stringData = JSON.stringify(data);
 
-   var zip = Archiver('zip');
+  var zip = Archiver('zip');
 
-   zip.pipe(res);
-  
-   zip.file(path.normalize(process.cwd()+'/public/config/config.json'),{name:'config/config.json'})
-   .file(path.normalize(process.cwd()+'/public/compose/docker-compose.yml'),{name:'docker-compose.yml'})
-   .file(path.normalize(process.cwd()+'/public/batch/start_gallery.bat'),{name:'start_gallery.bat'})
-   .append(stringData,{name:'dashboard/data.json'})
-   .finalize();
-    
+  zip.pipe(res);
+
+  zip.file(path.normalize(process.cwd() + '/public/config/config.json'), { name: 'config/config.json' })
+    .file(path.normalize(process.cwd() + '/public/compose/docker-compose.yml'), { name: 'docker-compose.yml' })
+    .file(path.normalize(process.cwd() + '/public/batch/start_gallery.bat'), { name: 'start_gallery.bat' })
+    .append(stringData, { name: 'dashboard/data.json' })
+    .finalize();
+
 });
 
 //Re-load saved dashboard
@@ -120,7 +120,7 @@ router.get("/api/get-widget-url/", function (req, res, next) {
   var containerName = req.query.name;
   var splitNames = containerName.split(/[:/]/);
   var name = splitNames[1];
-  var rootURL = 'http://'+process.env.HOST+":";
+  var rootURL = 'http://' + process.env.HOST + ":";
 
   var options = {
     all: true, limit: 1, filters: { name: [name] }
@@ -140,12 +140,12 @@ router.get("/api/get-widget-url/", function (req, res, next) {
         var container = dockerHost.getContainer(containerData.Id);
         container.inspect((err, data) => {
           var port = data.NetworkSettings.Ports["3838/tcp"][0].HostPort;
-          console.log(rootURL+port);
-          var url = rootURL+port;
-          checkReach(url,100).then(bool=>{
-              res.json({url:url});
+          console.log(rootURL + port);
+          var url = rootURL + port;
+          checkReach(url, 100).then(bool => {
+            res.json({ url: url });
           });
-        }) 
+        })
       }
       else {//container isn't running
         console.log("not running,lets boot her up!");
@@ -153,17 +153,25 @@ router.get("/api/get-widget-url/", function (req, res, next) {
         container.start({}, (err, data) => {
           container.inspect((err, data) => {
             var port = data.NetworkSettings.Ports["3838/tcp"][0].HostPort;
-            console.log(rootURL+port);
-            var url = rootURL+port;
-          checkReach(url,100).then(bool=>{
-              res.json({url:url});
-          });
+            console.log(rootURL + port);
+            var url = rootURL + port;
+            checkReach(url, 100).then(bool => {
+              res.json({ url: url });
+            });
           });
         });
       }
     }
     else {//container doesn't exist
       console.log("Container doesnt exist");
+
+      data_access.getWidgets().then((response) => {
+        response.forEach(image => {
+          dockerHost.pull(image.docker, (err, mystream) => {
+            mystream.pipe(process.stdout);
+          });
+        });
+      });
       var splitNames = containerName.split(/[:/]/);
       console.log(splitNames);
       var container = dockerHost.createContainer({
@@ -173,7 +181,7 @@ router.get("/api/get-widget-url/", function (req, res, next) {
         ExposedPorts: { '3838/tcp': {} },
         Volumes: { '/srv/shiny-server/data': {} },
         HostConfig: {
-          Binds: [dataDir+':/srv/shiny-server/data'],
+          Binds: [dataDir + ':/srv/shiny-server/data'],
           PortBindings: {
             '3838/tcp': [{ 'HostPort': '' }],
           }
@@ -183,21 +191,21 @@ router.get("/api/get-widget-url/", function (req, res, next) {
       }).then(container => {
         container.inspect((err, data) => {
           var port = data.NetworkSettings.Ports["3838/tcp"][0].HostPort;
-          var url = rootURL+port;
-          checkReach(url,100).then(bool=>{
-              res.json({url:url});
+          var url = rootURL + port;
+          checkReach(url, 100).then(bool => {
+            res.json({ url: url });
           });
         });
-      }).catch(err=>{
+      }).catch(err => {
         console.log(err);
       })
 
     }
-  }); 
+  });
 });
 
 router.get("/tests", async function (req, res, next) {
-  res.send({"message":"Hi there!"});
+  res.send({ "message": "Hi there!" });
 });
 
 module.exports = router;
