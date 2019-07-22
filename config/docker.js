@@ -21,6 +21,14 @@ if (isWindows) {
     }
     console.log(options);
 }else{
+    dns.lookup('host.docker.internal',(err,addresses,family)=>{
+        if(err){
+            console.log(err);
+        }
+
+        console.log(addresses);
+        console.log(family);
+    })
     options = {
         protocol: 'http', host: 'host.docker.internal', port: '2375'
     }
