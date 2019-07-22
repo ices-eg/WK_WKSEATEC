@@ -9,6 +9,6 @@ set COMPOSE_CONVERT_WINDOWS_PATHS=1
 
 docker-compose pull && docker-compose up
 
-start "" http://localhost:4200
+start "" http://localhost:5555
 
 pause
