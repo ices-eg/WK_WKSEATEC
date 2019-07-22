@@ -22,7 +22,7 @@ if (isWindows) {
     console.log(options);
 }else{
     options = {
-        protocol: 'http', host: '192.168.0.1', port: '2375'
+        protocol: 'http', host: 'host.docker.internal', port: '2375'
     }
     console.log(options);
 }
