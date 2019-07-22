@@ -15,9 +15,7 @@ var HOST = process.env.HOST;
 
 var DIR = process.env.DIR;
 
-var dataDir = path.normalize(DIR+'/data').substr(1);
-
-dataDir = 'c:/'+dataDir;
+var dataDir = path.normalize(DIR+'/data');
 
 
 console.log(dataDir);
@@ -133,7 +131,6 @@ router.get("/api/get-widget-url/", function (req, res, next) {
       console.log(err);
       console.log("Can't find image with that name")
     }
-    console.log(containers);
     var containerData;
     //Does a container exist for this image?
     if (containers.length > 0) {
@@ -168,7 +165,7 @@ router.get("/api/get-widget-url/", function (req, res, next) {
     else {//container doesn't exist
       console.log("Container doesnt exist");
       var splitNames = containerName.split(/[:/]/);
-
+      console.log(splitNames);
       var container = dockerHost.createContainer({
         Image: containerName,
         name: splitNames[1],
@@ -192,7 +189,6 @@ router.get("/api/get-widget-url/", function (req, res, next) {
           });
         });
       }).catch(err=>{
-        console.log(req);
         console.log(err);
       })
 
