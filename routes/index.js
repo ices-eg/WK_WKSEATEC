@@ -17,6 +17,8 @@ var DIR = process.env.DIR;
 
 var dataDir = path.normalize(DIR + '/data');
 
+const hbs = require('handlebars');
+
 
 console.log(dataDir);
 
@@ -100,10 +102,23 @@ router.post("/api/save-dashboard", function (req, res, next) {
 
   var zip = Archiver('zip');
 
+  const composeTemplate = hbs.compile(fs.readFileSync(path.normalize(process.cwd() + '/public/compose/docker-compose.hbs')).toString('utf-8')); 
+  var handlebarsData = {images:[]};
+   for(var i=0;i<data.widgets.length;i++){
+     var ourWidget = data.widgets[i].widget;
+     var splitNames = ourWidget.docker.split(/[:/]/);
+     var name = splitNames[1];
+     var insert = {name:name, image:ourWidget.docker};
+      handlebarsData.images.push(insert);
+   }
+   console.log(handlebarsData);
+
+   var composeData = composeTemplate(handlebarsData);
+
   zip.pipe(res);
 
   zip.file(path.normalize(process.cwd() + '/public/config/config.json'), { name: 'config/config.json' })
-    .file(path.normalize(process.cwd() + '/public/compose/docker-compose.yml'), { name: 'docker-compose.yml' })
+    .append(composeData, { name: 'docker-compose.yml' })
     .file(path.normalize(process.cwd() + '/public/batch/start_gallery.bat'), { name: 'start_gallery.bat' })
     .append(stringData, { name: 'dashboard/data.json' })
     .finalize();
