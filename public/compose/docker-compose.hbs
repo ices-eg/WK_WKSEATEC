@@ -22,14 +22,15 @@ services:
       - ./config/:/usr/src/app/mounts/config/
       - ./dashboard/:/usr/src/app/dashboard/
 
-  {{#each images}}
-    {{this.name}}:
-        image: {{this.image}}
+  
+{{#each images}}
+  {{this.name}}:
+    image: {{this.image}}
     ports:
       - '3838'
     volumes:
       - ./data/:/srv/shiny-server/data
-  {{/each}}
+{{/each}}
 
 networks: 
   gallerynet:
