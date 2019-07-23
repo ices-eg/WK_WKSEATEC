@@ -119,10 +119,7 @@ export class WidgetService {
       tap(_=>console.log("Loaded Dashboard")),
       catchError(this.handleError<Draggable[]>('loadDashboard',[]))
     ).subscribe(draggables=>{
-      if(!(draggables.length() == 0)){
         this.viewList = draggables;
-      }
-      
     });
     
   }
