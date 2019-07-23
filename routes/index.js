@@ -161,7 +161,7 @@ router.get("/api/load-dashboard", function (req, res, next) {
         })
         
     });
-    res.json();
+    res.json(response);
   }).catch(err=>{
     console.log(err);
   })
