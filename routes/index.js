@@ -86,7 +86,6 @@ router.get("/api/get-saved-widgets", async function (req, res, next) {
 
   data_access.getSavedWidgets()
     .then((response) => {
-      console.log(response);
       res.json(response);
     }).catch(err => {
       console.log(err);
@@ -133,6 +132,37 @@ router.post("/api/save-dashboard", function (req, res, next) {
 //Re-load saved dashboard
 router.get("/api/load-dashboard", function (req, res, next) { 
   data_access.loadDashboard().then((response)=>{
+    response.forEach(widget => {
+      var rootURL = 'http://host.docker.internal' + ":";
+      var containerName = widget.widget.docker;
+      var splitNames = containerName.split(/[:/]/);
+      var name = splitNames[1];
+
+      var options = {
+        all: true, limit: 1, filters: { name: [name] }
+      }
+      //console.log(options);
+      dockerHost.listContainers(options, (err, containers) => {
+        if (err) {
+          console.log(err);
+          console.log("Can't find image with that name")
+        }
+        var containerData;
+        //Does a container exist for this image?
+        if (containers.length > 0) {
+          containerData = containers[0];
+          //Is the container running already?
+          if (containerData.State === "running") {
+            var container = dockerHost.getContainer(containerData.Id);
+            container.inspect((err, data) => {
+              var port = data.NetworkSettings.Ports["3838/tcp"][0].HostPort;
+              console.log(rootURL + port);
+              var url = rootURL + port;
+              widget.widget.widgetURL = url;
+            });
+          }
+        }
+    });
     res.json(response);
   }).catch(err=>{
     console.log(err);
