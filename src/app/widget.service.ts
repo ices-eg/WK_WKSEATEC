@@ -45,7 +45,8 @@ export class WidgetService {
   }
 
   constructor( private http:HttpClient) {
-    this.viewList=[];
+      this.viewList = [];
+      this.loadDashboard();
    }
 
   getWidgets(): Observable<Widget[]>{
@@ -110,6 +111,20 @@ export class WidgetService {
       tap(_=>console.log("Dashboard posted")),
       catchError(this.handleError('postDashboard',dashboard))
     );
+  }
+
+  public loadDashboard():void{
+    this.http.get<Draggable[]>('/api/load-dashboard',httpOptions)
+    .pipe(
+      tap(_=>console.log("Loaded Dashboard")),
+      catchError(this.handleError<Draggable[]>('loadDashboard',[]))
+    ).subscribe(draggables=>{
+      if(!(draggables.length() == 0)){
+        this.viewList = draggables;
+      }
+      
+    });
+    
   }
 
   private handleError<T>(operation = 'operation',result?:T){
