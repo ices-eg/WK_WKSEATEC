@@ -130,7 +130,13 @@ router.post("/api/save-dashboard", function (req, res, next) {
 });
 
 //Re-load saved dashboard
-router.get("/api/load-dashboard", function (req, res, next) { });
+router.get("/api/load-dashboard", function (req, res, next) { 
+  data_access.loadDashboard().then((response)=>{
+    res.json(response);
+  }).catch(err=>{
+    console.log(err);
+  })
+});
 
 //Download dashboard to use offline
 router.get("/api/download-dashboard", function (req, res, next) { });

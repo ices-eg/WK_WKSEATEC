@@ -18,12 +18,6 @@ async function getWidgets(path) {
    } catch (e) {
       console.log(e);
    }
-
-   /* fs.readFile(path),(err,data)=>{
-      if(err) throw err;
-      let  res = JSON.parse(data);
-      return res.widgets.widget;
-   } */
 }
 
 async function getSavedWidgets(path) {
@@ -60,7 +54,17 @@ async function saveWidget(path) {
    console.log("Can't save a widget when offline!");
 }
 
+async function loadDashboard(path){
+   try{
+      let content = await readFile(path);
+      let data = JSON.parse(content);
+      return data.widgets;
+   }catch(err){
+      console.log(e);
+   }
+}
+
 module.exports = {
-   getWidgets, getSavedWidgets, postWidget, saveWidget
+   getWidgets, getSavedWidgets, postWidget, saveWidget,loadDashboard
 }
 

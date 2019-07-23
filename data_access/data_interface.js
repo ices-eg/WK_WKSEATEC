@@ -41,6 +41,16 @@ async function saveWidget(body) {
     }
 }
 
+async function loadDashboard(){
+    if(config.config.isOffline){
+        return json_access.loadDashboard(filepath);
+    }
+    else{
+        console.log("Must be offline to load a dashboard");//in future we will save dashboards online too
+        return null;
+    }
+}
+
 module.exports = {
-    getWidgets, getSavedWidgets, postWidget, saveWidget
+    getWidgets, getSavedWidgets, postWidget, saveWidget,loadDashboard
 }
