@@ -148,10 +148,11 @@ router.get("/api/get-widget-url/", function (req, res, next) {
   var name = splitNames[1];
   var rootURL = '';
   if(config.config.isOffline){
-    rootURL = 'http://' + process.env.HOST + ":";
+    rootURL = 'http://host.docker.internal' + ":";
+    
   }
   else{
-    'http://host.docker.internal' + ":";
+    rootURL = 'http://' + process.env.HOST + ":";
   }
   
 
