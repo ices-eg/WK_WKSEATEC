@@ -27,4 +27,5 @@ if (isWindows) {
     console.log(options);
 }
 
+console.log(options);
 module.exports = new Docker(options);
