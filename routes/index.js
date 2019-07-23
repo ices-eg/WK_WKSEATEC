@@ -102,18 +102,18 @@ router.post("/api/save-dashboard", function (req, res, next) {
 
   var zip = Archiver('zip');
 
-  const composeTemplate = hbs.compile(fs.readFileSync(path.normalize(process.cwd() + '/public/compose/docker-compose.hbs')).toString('utf-8')); 
-  var handlebarsData = {images:[]};
-   for(var i=0;i<data.widgets.length;i++){
-     var ourWidget = data.widgets[i].widget;
-     var splitNames = ourWidget.docker.split(/[:/]/);
-     var name = splitNames[1];
-     var insert = {name:name, image:ourWidget.docker};
-      handlebarsData.images.push(insert);
-   }
-   console.log(handlebarsData);
+  const composeTemplate = hbs.compile(fs.readFileSync(path.normalize(process.cwd() + '/public/compose/docker-compose.hbs')).toString('utf-8'));
+  var handlebarsData = { images: [] };
+  for (var i = 0; i < data.widgets.length; i++) {
+    var ourWidget = data.widgets[i].widget;
+    var splitNames = ourWidget.docker.split(/[:/]/);
+    var name = splitNames[1];
+    var insert = { name: name, image: ourWidget.docker };
+    handlebarsData.images.push(insert);
+  }
+  console.log(handlebarsData);
 
-   var composeData = composeTemplate(handlebarsData);
+  var composeData = composeTemplate(handlebarsData);
 
   zip.pipe(res);
 
