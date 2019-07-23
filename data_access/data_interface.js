@@ -47,7 +47,7 @@ async function loadDashboard(){
     }
     else{
         console.log("Must be offline to load a dashboard");//in future we will save dashboards online too
-        return null;
+       return sql_access.loadDashboard();
     }
 }
 

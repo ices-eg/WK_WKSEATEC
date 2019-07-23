@@ -59,6 +59,11 @@ async function saveWidget(body){
  }
 }
 
+async function loadDashboard(){
+    var empty = {widgets:[]};
+    return empty.widgets;
+}
+
 module.exports ={
-    getWidgets,getSavedWidgets,postWidget,saveWidget
+    getWidgets,getSavedWidgets,postWidget,saveWidget, loadDashboard
 }
