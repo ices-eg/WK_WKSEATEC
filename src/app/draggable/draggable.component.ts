@@ -18,6 +18,8 @@ export class DraggableComponent implements OnInit, AfterViewInit {
 
   @ViewChild('draggable', { static: false }) element: ElementRef;
 
+  public width:Number;
+  public height:Number;
 
   constructor(private widgetService: WidgetService) { }
 
@@ -42,9 +44,16 @@ export class DraggableComponent implements OnInit, AfterViewInit {
       this.draggable.sizeX = 400;
       this.draggable.sizeY = 400;
       this.draggable.idx = this.idx;
-      this.notify.emit(this.draggable);
+
+    }
+    else{
+      this.element.nativeElement.offsetLeft = this.draggable.offsetLeft;
+      this.element.nativeElement.offsetTop = this.draggable.offsetTop;
     }
 
+    this.width = this.draggable.sizeX;
+    this.height = this.draggable.sizeY;
+    this.notify.emit(this.draggable);
   }
   onDragEnd(event) {
     this.draggable.offsetLeft = event.x;
