@@ -11,7 +11,7 @@ import { Draggable } from '../Draggable';
 export class DraggableComponent implements OnInit, AfterViewInit {
   private urlSource: string;
 
-  @Input('draggable') draggable:Draggable; 
+  @Input('draggable') draggable: Draggable;
   @Input('idx') idx: number;
   @Input('boundsRegion') boundsArea: ElementRef;
   @Output() notify: EventEmitter<Draggable> = new EventEmitter<Draggable>();
@@ -35,12 +35,15 @@ export class DraggableComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.draggable.offsetLeft = this.element.nativeElement.offsetLeft;
-    this.draggable.offsetTop = this.element.nativeElement.offsetTop;
-    this.draggable.sizeX = 400;
-    this.draggable.sizeY = 400;
-    this.draggable.idx = this.idx;
-    this.notify.emit(this.draggable);
+    if (this.draggable.idx < 0) {
+      this.draggable.offsetLeft = this.element.nativeElement.offsetLeft;
+      this.draggable.offsetTop = this.element.nativeElement.offsetTop;
+      this.draggable.sizeX = 400;
+      this.draggable.sizeY = 400;
+      this.draggable.idx = this.idx;
+      this.notify.emit(this.draggable);
+    }
+
   }
   onDragEnd(event) {
     this.draggable.offsetLeft = event.x;
@@ -54,11 +57,11 @@ export class DraggableComponent implements OnInit, AfterViewInit {
     this.notify.emit(this.draggable);
   }
 
-  onLoadFrame(iFrame){
+  onLoadFrame(iFrame) {
     console.log((iFrame.contentWindow || iFrame.contentDocument))
   }
 
-  oniFrameError(event){
+  oniFrameError(event) {
     console.log(event);
   }
 }
