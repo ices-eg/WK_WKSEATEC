@@ -18,6 +18,7 @@ var DIR = process.env.DIR;
 var dataDir = path.normalize(DIR + '/data');
 
 const hbs = require('handlebars');
+const config = require('../data_access/config_reader');
 
 
 console.log(dataDir);
@@ -145,7 +146,14 @@ router.get("/api/get-widget-url/", function (req, res, next) {
   var containerName = req.query.name;
   var splitNames = containerName.split(/[:/]/);
   var name = splitNames[1];
-  var rootURL = 'http://' + process.env.HOST + ":";
+  var rootURL = '';
+  if(config.config.isOffline){
+    rootURL = 'http://' + process.env.HOST + ":";
+  }
+  else{
+    'http://host.docker.internal' + ":";
+  }
+  
 
   var options = {
     all: true, limit: 1, filters: { name: [name] }
