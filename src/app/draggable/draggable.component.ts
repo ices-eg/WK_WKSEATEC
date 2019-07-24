@@ -18,13 +18,19 @@ export class DraggableComponent implements OnInit, AfterViewInit {
 
   @ViewChild('draggable', { static: false }) element: ElementRef;
 
-  public width:Number;
-  public height:Number;
+  public width:number;
+  public height:number;
+  public offsetLeft:number;
+  public offsetTop:number;
 
   constructor(private widgetService: WidgetService) { }
 
   ngOnInit() {
     this.urlSource = this.draggable.widget.widgetURL;
+    this.width = this.draggable.sizeX;
+    this.height = this.draggable.sizeY;
+    this.offsetLeft = this.draggable.offsetLeft;
+    this.offsetTop = this.draggable.offsetTop;
   }
 
   getURL() {
@@ -46,13 +52,6 @@ export class DraggableComponent implements OnInit, AfterViewInit {
       this.draggable.idx = this.idx;
 
     }
-    else{
-      this.element.nativeElement.offsetLeft = this.draggable.offsetLeft;
-      this.element.nativeElement.offsetTop = this.draggable.offsetTop;
-    }
-
-    this.width = this.draggable.sizeX;
-    this.height = this.draggable.sizeY;
     this.notify.emit(this.draggable);
   }
   onDragEnd(event) {

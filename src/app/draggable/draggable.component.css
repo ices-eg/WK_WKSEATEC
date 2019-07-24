@@ -1,8 +1,8 @@
 .resp-container {
   position: absolute;
   margin: 2rem;
-  width: 400px;
-  height: 400px;
+  /*width: 400px;
+  height: 400px;*/
 }
 
 .iframe-drag-handle {

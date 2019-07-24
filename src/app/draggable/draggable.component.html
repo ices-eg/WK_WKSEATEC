@@ -1,6 +1,6 @@
 <div #draggable class="resp-container" ngResizable ngDraggable rzHandles="n,s,e,w,se,sw" [handle]="dragHandle"
   [bounds]="boundsArea" [inBounds]="true" [preventDefaultEvent]="true" (endOffset)="onDragEnd($event)"
-  (rzStop)="onSizeEnd($event)" [style.height.px]="height" [style.width.px]="width">
+  (rzStop)="onSizeEnd($event)" [style.height.px]="height" [style.width.px]="width" [style.top.px]="offsetTop" [style.left.px]="offsetLeft">
   <div #dragHandle class="iframe-drag-handle">
     <h6>Click to Drag</h6>
     <a class="remove" (click)="remove()">&times;</a>
