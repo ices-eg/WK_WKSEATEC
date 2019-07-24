@@ -130,39 +130,43 @@ router.post("/api/save-dashboard", function (req, res, next) {
 });
 
 //Re-load saved dashboard
-router.get("/api/load-dashboard", function (req, res, next) { 
+router.get("/api/load-dashboard", async function (req, res, next) { 
   data_access.loadDashboard().then((response)=>{
+    var promiseArray = [];
     response.forEach((widget)=>{
       var rootURL = 'http://host.docker.internal' + ":";
         var containerName = widget.widget.docker;
         var splitNames = containerName.split(/[:/]/);
         var name = splitNames[1];
-  
+
         var options = {
           all: true, limit: 1, filters: { name: [name] }
         }
 
-        dockerHost.listContainers(options,(err,containers)=>{
-          if(err){
-            console.log(err);
-          }
-
-          var containerData;
-          if(containers.length>0){
-            containerData = containers[0];
-            var container = dockerHost.getContainer(containerData.Id);
-            container.inspect((err,data)=>{
-              var port = data.NetworkSettings.Ports["3838/tcp"][0].HostPort;
-                console.log(rootURL + port);
-                var url = rootURL + port;
-                widget.widget.widgetURL = url;
-            })
-          }
-        })
+        promiseArray.push(new Promise((resolve,reject)=>{
+          dockerHost.listContainers(options,(err,containers)=>{
+            if(err){
+              console.log(err);
+            }
+  
+            var containerData;
+            if(containers.length>0){
+              containerData = containers[0];
+              var container = dockerHost.getContainer(containerData.Id);
+              container.inspect((err,data)=>{
+                var port = data.NetworkSettings.Ports["3838/tcp"][0].HostPort;
+                  console.log(rootURL + port);
+                  var url = rootURL + port;
+                  widget.widget.widgetURL = url;
+                  resolve(widget);
+              });
+            }
+          });
+        }));
+        
         
     });
-    console.log(response);
-    res.json(response);
+    res.json(await Promise.all(promiseArray));
   }).catch(err=>{
     console.log(err);
   })
