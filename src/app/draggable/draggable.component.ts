@@ -26,6 +26,7 @@ export class DraggableComponent implements OnInit, AfterViewInit {
   constructor(private widgetService: WidgetService) { }
 
   ngOnInit() {
+    console.log("Init Draggable: "+this.draggable)
     this.urlSource = this.draggable.widget.widgetURL;
     this.width = this.draggable.sizeX;
     this.height = this.draggable.sizeY;
@@ -43,8 +44,8 @@ export class DraggableComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log(this.draggable);
     if(this.draggable.idx < 0) {
+      console.log("Only run online")
       this.draggable.offsetLeft = this.element.nativeElement.offsetLeft;
       this.draggable.offsetTop = this.element.nativeElement.offsetTop;
       this.draggable.sizeX = 400;
