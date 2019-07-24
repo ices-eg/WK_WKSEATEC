@@ -121,6 +121,7 @@ export class WidgetService {
     ).subscribe(draggables=>{
       console.log(draggables);
         this.viewList = draggables;
+        this.refreshNeeded.next();
     });
     
   }

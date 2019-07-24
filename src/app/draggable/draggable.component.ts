@@ -18,8 +18,8 @@ export class DraggableComponent implements OnInit, AfterViewInit {
 
   @ViewChild('draggable', { static: false }) element: ElementRef;
 
-  public width:number;
-  public height:number;
+  public width:number = 400;
+  public height:number = 400;
   public offsetLeft:number;
   public offsetTop:number;
 
@@ -32,6 +32,7 @@ export class DraggableComponent implements OnInit, AfterViewInit {
     this.height = this.draggable.sizeY;
     this.offsetLeft = this.draggable.offsetLeft;
     this.offsetTop = this.draggable.offsetTop;
+    this.notify.emit(this.draggable);
   }
 
   getURL() {
