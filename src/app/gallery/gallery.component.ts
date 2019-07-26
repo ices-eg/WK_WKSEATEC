@@ -21,11 +21,13 @@ export class GalleryComponent implements OnInit {
     this.getWidgets();
   }
 
+  //get widgets from the widgets service
   getWidgets():void{
     this.widgetService.getWidgets()
     .subscribe(widgets=>this.widgets =widgets);
   }
 
+  //open the modal to add post a widget when the upload button is clicked
   openFormModal(){
     const modalRef = this.modalService.open(FormModalComponent,{size:'lg'});
 
@@ -36,6 +38,7 @@ export class GalleryComponent implements OnInit {
     });
   }
 
+  //save widget to widget tray
   saveWidget(widget:Widget){
     console.log("Clicked");
     this.widgetService.saveWidget(widget)

@@ -20,15 +20,18 @@ export class WidgetsComponent implements OnInit {
 
   }
 
+  //subscribe to widget services getWidgets method to retrieve saved widgets
   getWidgets(): void {
     this.widgetService.getSavedWidgets()
       .subscribe(widgets => this.widgets = widgets);
   }
 
+  //add widgets to the view when a widgets add button is clicked
   addWidget(widget: Widget): void {
     this.widgetService.addViewWidget(widget);
   }
 
+  //access the custom filter pipe for searching to filter the saved widgets list
   search(search: string): void {
     this.myFilter = { name: search };
   }

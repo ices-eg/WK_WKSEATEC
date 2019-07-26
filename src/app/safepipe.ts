@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
+//custom pipe to stop errors when sending HTTP requests to API on same server
 @Pipe({
     name: 'safe'
   })

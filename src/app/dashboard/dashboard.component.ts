@@ -13,6 +13,7 @@ import {saveAs} from 'file-saver';
 
 export class DashboardComponent implements OnInit {
 
+  //array to keep track of our view widgets
   widgetViewList: Draggable[];
   private sub: Subscription;
   isFront: boolean;
@@ -20,7 +21,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild('dragBounds', { static: true }) dragBounds: ElementRef;
   constructor(private widgetService: WidgetService) { }
 
-
+//set up our dashboard and subscribe to the services view array
   ngOnInit() {
     this.widgetService.refreshNeeded.subscribe(() => {
       this.getWidgets();
@@ -35,7 +36,7 @@ export class DashboardComponent implements OnInit {
       console.log(this.widgetViewList);
     });
   }
-
+//when a widget is clicked, place that widget at the front of the zindex
   widgetClicked(widget, indx, ref: ElementRef): void {
     this.widgetViewList.forEach(e => {
       e.active = false;
@@ -47,6 +48,7 @@ export class DashboardComponent implements OnInit {
     console.log(event);
   }
 
+  //send request to service to post the current dashboard data and retrieve the Blob(zip file) containing all offline files
   downloadDashboard(){
     this.widgetService.postDashboard(this.widgetViewList).subscribe(dashboard=>{
       /* console.log(dashboard);
@@ -54,6 +56,7 @@ export class DashboardComponent implements OnInit {
       const blob = new Blob([dashboard],{
         type:'application/zip'
       });
+      //open a new window to download our zip file
       const url = window.URL.createObjectURL(blob);
       window.open(url);
     },err=>{

@@ -24,6 +24,7 @@ export class AppComponent {
     this.loadComponent=false;
   }
 
+  //handle animmation of sidebar tray
   myGallery():void{
     this.currRoute=this.router.url;
     if(this.isHidden){

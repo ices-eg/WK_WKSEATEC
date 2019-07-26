@@ -20,10 +20,12 @@ export class FormModalComponent implements OnInit {
   ngOnInit() {
   }
 
+  //handle the exiting of the modal
   closeModal(){
     this.activeModal.close('Modal Closed');
   }
 
+  //create a form for when we post our widget
    createForm(){
     this.myForm = this.formBuilder.group({
       name:'',
@@ -33,6 +35,7 @@ export class FormModalComponent implements OnInit {
     });
   }
 
+  //handle the submission of the form
    submitForm():void{
     //TODO post form to server
     var widget = new Widget(this.myForm.value);
