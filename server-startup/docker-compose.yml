@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  angular:
+    networks:
+      gallerynet:
+    image: informaticsmarine/angular-gallery-app:latest
+    environment:
+       OFFLINE: 1
+    ports:
+      - '4200:4200'
+
+  express:
+    networks:
+      gallerynet:
+    image: informaticsmarine/node-gallery-app:latest
+    ports:
+      - '3000:3000'
+    environment:
+      HOST: 10.11.1.70
+      DIR: "${PWD:?err}"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./config/config.json:/usr/src/app/mounts/config/config.json
+
+networks:
+  gallerynet:
+    external: true
