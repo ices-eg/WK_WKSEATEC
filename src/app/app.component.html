@@ -1,0 +1,23 @@
+<div class="container-full h-100">
+    <div class="left-sidebar-wrapper" [style.width.%]="sidebarWidth">
+      <div class="widgets-container">
+        <app-widgets></app-widgets>
+      </div>
+     </div>
+
+  <div class="row h-100" id="main" [style.marginLeft.%]="sidebarWidth">
+    <div id="inner-sidebar-wrapper" class="col-xl-1 col-lg-2">
+      <ul class="nav flex-column align-items-center">
+        <li id="main-gallery" class="nav-item"><a routerLink="/gallery" [routerLinkActive]="'selected'">Gallery</a></li>
+        <li id="my-gallery" class="nav-item" ><a (click)="myGallery();" [class.selected]="!isHidden">Widgets</a></li>
+        <li id="dashboard" class="nav-item" ><a routerLink="/dashboard"  [routerLinkActive]="'selected'">Dashboard</a></li>
+      </ul>
+    </div>
+    <div class="col-md-11 col-lg-11 d-none d-md-block main-dashboard" [ngClass]="{'grid': router.url ==='/dashboard','scroll':router.url ==='/gallery'}">
+      
+      <!--TODO place the different main page components here, e.g shiny gallery, shiny dashboard & shiny app preview-->
+      <router-outlet></router-outlet>
+     </div>
+    
+  </div>
+</div>

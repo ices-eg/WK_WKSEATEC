@@ -1,0 +1,10 @@
+<div class="dashboard" #dragBounds>
+    <button class="btn btn-large btn-primary boot-but float-right " (click)="downloadDashboard()">Download</button>
+  <ul>
+    <li *ngFor="let draggable of widgetViewList; let i =index" (click)="widgetClicked(draggable,i)"
+      [ngClass]="{'active': draggable.active,'inactive':!draggable.active}">
+      <app-draggable (notify)='onDimensionsChanged($event)' [idx]='i' [draggable]="draggable"
+        [boundsRegion]="dragBounds"></app-draggable>
+    </li>
+  </ul>
+</div>
