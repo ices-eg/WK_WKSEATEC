@@ -21,6 +21,7 @@ async function getWidgets(path) {
    }
 }
 
+//offline, saved widgets and regular widgets are the same thing
 async function getSavedWidgets(path) {
    try {
       var widgets = [];
@@ -34,13 +35,8 @@ async function getSavedWidgets(path) {
    } catch (e) {
       console.log(e);
    }
-   /* fs.readFile(path), (err, data) => {
-      if (err) throw err;
-      let res = JSON.parse(data);
-      return res.widgets.widget;
-   } */
 }
-
+//can't post a widget while offline so we don't return anything
 async function postWidget(path) {
    let content = await readFile(path,'utf8').then(res => console.log(res))
       .catch(err => console.log(err));

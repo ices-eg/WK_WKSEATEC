@@ -13,6 +13,7 @@ if (isWindows) {
     }
     console.log(options);
 } else if(!config.config.isOffline){
+    //our server runs on linux so we point it towards the docker daemon directory
     options = {
         socketPath: '/var/run/docker.sock'
     }

@@ -3,7 +3,7 @@ var {poolPromise}= require('../config/db');
 const imageEndpoint = '/blob/master/Screenshot.png?raw=true';
 
 async function getWidgets(){
-    //Pool promises help when we are doing concurrent requests to the database
+    //Pool promises prevent errors when we are doing concurrent requests to the database
     try{
         const pool = await poolPromise;
         const result = await pool.request()
@@ -15,6 +15,7 @@ async function getWidgets(){
     }
 }
 
+//return users saved widgets
 async function getSavedWidgets(){
     try{
         const pool = await poolPromise;
@@ -26,6 +27,7 @@ async function getSavedWidgets(){
     }
 }
 
+//query our database to post a widget
 async function postWidget(body){
     try{
         var imgUrl = body.github + imageEndpoint;
@@ -46,6 +48,7 @@ async function postWidget(body){
       }
 }
 
+//save a widget to the users tray
 async function saveWidget(body){
  var id = body.id;
  try{

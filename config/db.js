@@ -1,7 +1,11 @@
 const key = require('./keys').SQLURI;
 const sql = require('mssql');
 
-//create our connection to the sql server
+/**
+ * Create our connection to the sql server
+ * Pool promises prevent errors when making concurrent queries
+ * Each query waits until the previous one has completed
+ */
 const poolPromise = new sql.ConnectionPool(key)
     .connect()
     .then(pool => {
