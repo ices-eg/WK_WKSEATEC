@@ -3,6 +3,7 @@ var {poolPromise}= require('../config/db');
 const imageEndpoint = '/blob/master/Screenshot.png?raw=true';
 
 async function getWidgets(){
+    //Pool promises help when we are doing concurrent requests to the database
     try{
         const pool = await poolPromise;
         const result = await pool.request()
@@ -60,6 +61,7 @@ async function saveWidget(body){
 }
 
 async function loadDashboard(){
+    //return an empty array when we try and load a dashboard from the sql access, in the future we will also save dashboards online
     var empty = {widgets:[]};
     return empty.widgets;
 }

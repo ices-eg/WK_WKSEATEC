@@ -5,6 +5,8 @@ const path = require('path');
 const filepath =path.normalize(process.cwd()+'/dashboard/data.json');
 
 
+//based on our config return a different data access method, e.g sql for online JSON file for offline
+
 async function getWidgets() {
     /**TODO check config file and return different function
       *based on where app is running,for now lets return or

@@ -24,13 +24,12 @@ console.log(dataDir);
 
 const Archiver = require("archiver");
 
-function sleep(ms) {
-  return new Promise(resolve => {
-    setTimeout(resolve, ms);
-  });
-}
 
 async function checkReach(url, ms) {
+  /**
+   * tries to reach url every specified number of milliseconds until url is successfully reached
+   */
+
   var isReachable = await reachable(url);
   if (!isReachable) {
     setTimeout(checkReach, ms);
@@ -98,6 +97,7 @@ router.get("/api/get-saved-widgets", async function(req, res, next) {
 
 //Save dashboard to reuse later
 router.post("/api/save-dashboard", function(req, res, next) {
+  //save the posted JSON to a text file
   var jsonData = req.body;
   var data = {
     widgets: jsonData
@@ -106,6 +106,7 @@ router.post("/api/save-dashboard", function(req, res, next) {
 
   var zip = Archiver("zip");
 
+  //compile our docker-compose template based on the posted widgets
   const composeTemplate = hbs.compile(
     fs
       .readFileSync(
@@ -113,6 +114,7 @@ router.post("/api/save-dashboard", function(req, res, next) {
       )
       .toString("utf-8")
   );
+  //format our widgets so that they can be used with the template, we only want our widgets not the draggable's properties(e.g size, position etc)
   var handlebarsData = { images: [] };
   for (var i = 0; i < data.widgets.length; i++) {
     var ourWidget = data.widgets[i].widget;
@@ -125,6 +127,7 @@ router.post("/api/save-dashboard", function(req, res, next) {
 
   var composeData = composeTemplate(handlebarsData);
 
+  //zip all our required offline files
   zip.pipe(res);
 
   zip
@@ -155,7 +158,8 @@ router.post("/api/save-dashboard", function(req, res, next) {
 router.get("/api/load-dashboard", async function(req, res, next) {
   data_access
     .loadDashboard()
-    .then(async (response) => {
+    .then(async response => {
+      //we use Promises here to ensure our loop completes before we return the response
       var promiseArray = [];
       response.forEach(widget => {
         var rootURL = "http://host.docker.internal:";
@@ -168,7 +172,7 @@ router.get("/api/load-dashboard", async function(req, res, next) {
           limit: 1,
           filters: { name: [name] }
         };
-
+        //we push our widget Promise to the promise array
         promiseArray.push(
           new Promise((resolve, reject) => {
             dockerHost.listContainers(options, (err, containers) => {
@@ -189,7 +193,6 @@ router.get("/api/load-dashboard", async function(req, res, next) {
                     console.log(bool);
                     resolve(widget);
                   });
-                  
                 });
               }
             });
@@ -197,6 +200,7 @@ router.get("/api/load-dashboard", async function(req, res, next) {
         );
       });
       console.log(response);
+      //we resolve our promises and return the array of view widgets to the frontend
       res.send(await Promise.all(promiseArray));
     })
     .catch(err => {
@@ -208,22 +212,26 @@ router.get("/api/load-dashboard", async function(req, res, next) {
 router.get("/api/download-dashboard", function(req, res, next) {});
 
 router.get("/api/get-widget-url/", function(req, res, next) {
+  //format the widgets docker name so that we can find/create the container
   var containerName = req.query.name;
   var splitNames = containerName.split(/[:/]/);
   var name = splitNames[1];
   var rootURL = "";
+  //set the root of the url depending on whether we're running offline or online
   if (config.config.isOffline) {
+    //host.docker.internal resolves to the local ip of our host machine from within the container
     rootURL = "http://host.docker.internal" + ":";
   } else {
     rootURL = "http://" + process.env.HOST + ":";
   }
 
+  //set our search options for the current container
   var options = {
     all: true,
     limit: 1,
     filters: { name: [name] }
   };
-  //console.log(options);
+  //list all containers given our above options
   dockerHost.listContainers(options, (err, containers) => {
     if (err) {
       console.log(err);
@@ -236,10 +244,12 @@ router.get("/api/get-widget-url/", function(req, res, next) {
       //Is the container running already?
       if (containerData.State === "running") {
         var container = dockerHost.getContainer(containerData.Id);
+        //retrieve the host port of the container
         container.inspect((err, data) => {
           var port = data.NetworkSettings.Ports["3838/tcp"][0].HostPort;
           console.log(rootURL + port);
           var url = rootURL + port;
+          //ensure container has fully running before we return URL
           checkReach(url, 100).then(bool => {
             res.json({ url: url });
           });
@@ -248,7 +258,9 @@ router.get("/api/get-widget-url/", function(req, res, next) {
         //container isn't running
         console.log("not running,lets boot her up!");
         var container = dockerHost.getContainer(containerData.Id);
+        //start up the container
         container.start({}, (err, data) => {
+          //again retrieve the port on the host and wait til container is fully started before returning the URL
           container.inspect((err, data) => {
             var port = data.NetworkSettings.Ports["3838/tcp"][0].HostPort;
             console.log(rootURL + port);
@@ -262,16 +274,9 @@ router.get("/api/get-widget-url/", function(req, res, next) {
     } else {
       //container doesn't exist
       console.log("Container doesnt exist");
-
-      data_access.getWidgets().then(response => {
-        response.forEach(image => {
-          dockerHost.pull(image.docker, (err, mystream) => {
-            mystream.pipe(process.stdout);
-          });
-        });
-      });
       var splitNames = containerName.split(/[:/]/);
       console.log(splitNames);
+      //create our container with the necessary exposed ports, mounted volumes and then start it, retrieve it's port and return the URL
       var container = dockerHost
         .createContainer({
           Image: containerName,
@@ -287,6 +292,7 @@ router.get("/api/get-widget-url/", function(req, res, next) {
           }
         })
         .then(container => {
+          //start our container once created
           return container.start();
         })
         .then(container => {

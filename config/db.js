@@ -1,6 +1,7 @@
 const key = require('./keys').SQLURI;
 const sql = require('mssql');
 
+//create our connection to the sql server
 const poolPromise = new sql.ConnectionPool(key)
     .connect()
     .then(pool => {

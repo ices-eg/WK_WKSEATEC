@@ -4,12 +4,9 @@ var config =require('../data_access/config_reader');
 let isWindows = process.platform === "win32";
 
 let options = {};
-
-/*dns.lookup('host.docker.internal',function(err,addresses,family){
-    console.log(addresses);
-})*/
 console.log(process.env.HOST);
 
+//based on our current config, return the connection to the docker REST api
 if (isWindows) {
     options = {
         protocol: 'http', host: '127.0.0.1', port: '2375'
@@ -21,6 +18,7 @@ if (isWindows) {
     }
     console.log(options);
 }else{
+    //resolve the DNS before setting the value as Dockerode doesn't seem to like DNS 
     options = {
         protocol: 'http', host: dns.resolve('host.docker.internal'), port: '2375'
     }

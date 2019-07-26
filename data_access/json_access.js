@@ -10,6 +10,7 @@ async function getWidgets(path) {
       var widgets = [];
       let content = await readFile(path);
       let data = JSON.parse(content);
+      //The JSON file needs to be formatted so we can return just the widgets and not the Draggables as well
       for(var i = 0;i<data.widgets.length;i++){
          widgets.push(data.widgets[i].widget);
       }

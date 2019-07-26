@@ -1,3 +1,4 @@
 {
+    //sample of what the mounted config file will look like 
     "isOffline":false
 }
