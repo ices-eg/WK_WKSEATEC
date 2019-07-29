@@ -26,12 +26,13 @@ There are three main components to this application, the back-end developed with
 
 ### Online
 
-All files and data needed to start up the server are contained in the server-startup folder located in the root of the repo, the app currently makes use of a Microsoft SQL Server for it's database, before running the app on a server you must edit the docker-compose.yml file to add your SQL connection string in the following format:
+All files and data needed to start up the server are contained in the server-startup folder located in the root of the repo, the app currently makes use of a Microsoft SQL Server for it's database, before running the app on a server you must edit the docker-compose.yml file, under the environment tag, add your SQL connection string to the SQLURI variable in the following format:
 
 ```
-{
-SQLURI: "mssql://USERNAME:PASSWORD@SERVER_NAME/DATABASE_NAME"
-}
+environment:
+      HOST: 10.11.1.70
+      DIR: "${PWD:?err}"
+      SQLURI: "mssql://USERNAME:PASSWORD@SERVER_NAME/DATABASE_NAME"
 ```
 
 Starting the server is then simply a matter of opening a terminal/command line window at this directory and running the command:
