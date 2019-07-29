@@ -1,4 +1,4 @@
-const key = require('../keys/keys').SQLURI;
+const key = require('./keys').SQLURI;
 const sql = require('mssql');
 
 /**
