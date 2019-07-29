@@ -19,6 +19,7 @@ services:
     environment:
       HOST: 10.11.1.70
       DIR: "${PWD:?err}"
+      SQLURI: "ENTER YOUR SQL SERVER DETAILS HERE !!!!!!!!"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./config/config.json:/usr/src/app/mounts/config/config.json
