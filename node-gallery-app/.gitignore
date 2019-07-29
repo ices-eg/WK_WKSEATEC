@@ -3,7 +3,7 @@
 # Edit at https://www.gitignore.io/?templates=node
 
 ###Keys###
-./config/keys.js
+config\keys.js
 
 ### Node ###
 # Logs
