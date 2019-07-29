@@ -9,13 +9,13 @@ console.log("From db:"+key);
  */
 var poolPromise = null;
 if(!isOffline){
-    poolPromise = new sql.ConnectionPool(key)
+    poolPromise = new sql.ConnectionPool(process.env.SQLURI)
     .connect()
     .then(pool => {
         console.log("SQL Connected")
         return (pool);
     })
-    .catch(err => console.log("No SQL connection", err))
+    .catch(err => console.log("No SQL connection with key:"+key +" err:"+ err))
 }
 
 module.exports = {
