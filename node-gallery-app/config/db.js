@@ -1,6 +1,6 @@
 const key = require('./keys').SQLURI;
 const sql = require('mssql');
-
+console.log("From db:"+key);
 /**
  * Create our connection to the sql server
  * Pool promises prevent errors when making concurrent queries

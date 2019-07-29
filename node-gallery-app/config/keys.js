@@ -5,6 +5,7 @@ var keys;
 try{
 let rawdata = fs.readFileSync(directory);
 keys = JSON.parse(rawdata);
+console.log(keys.SQLURI);
 }
 catch(err){
     console.log("dir:" + directory +"err:"+err);
