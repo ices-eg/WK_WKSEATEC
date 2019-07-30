@@ -5,6 +5,8 @@
 ###Keys###
 node-gallery-app/config/keys.json
 
+replacements.txt
+
 ### Node ###
 # Logs
 logs
