@@ -36,7 +36,6 @@ environment:
 ```
 
 Starting the server is then simply a matter of opening a terminal/command line window at this directory and running the command:
->>>>>>> 1ece2892a554efd0a1d49017ff6b7f338f8056ee
 
 ```dockerfile
 docker-compose pull && docker-compose up
