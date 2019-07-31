@@ -26,9 +26,6 @@ There are three main components to this application, the back-end developed with
 
 ### Online
 
-<<<<<<< HEAD
-All files and data needed to start up the server are contained in the server-startup folder located in the root of the repo, simply open a terminal/command line window at this directory and run the command:
-=======
 All files and data needed to start up the server are contained in the server-startup folder located in the root of the repo, the app currently makes use of a Microsoft SQL Server for it's database, before running the app on a server you must edit the docker-compose.yml file, under the environment tag, add your SQL connection string to the SQLURI variable in the following format:
 
 ```
@@ -39,7 +36,6 @@ environment:
 ```
 
 Starting the server is then simply a matter of opening a terminal/command line window at this directory and running the command:
->>>>>>> 1ece2892a554efd0a1d49017ff6b7f338f8056ee
 
 ```dockerfile
 docker-compose pull && docker-compose up
@@ -49,6 +45,6 @@ This will obtain the latest versions of the Angular and Node docker images and s
 
 ### Offline
 
-The offline files are obtained by pressing the download button in the top right of the dashboard, this button triggers a post request to the back-end, sending the JSON objects of every widget currently being used in the dashboard. The back-end parses this data and zips it up with the necessary files to run everything offline and makes it available as a download. All that needs to be done to run the app offline now is to double-click the 'start_gallery.bat' file and the app will start up, of course this requires that Docker for Windows is installed.
+The offline files are obtained by pressing the download button in the top right of the dashboard, this button triggers a post request to the back-end, sending the JSON objects of every widget currently being used in the dashboard. The back-end parses this data and zips it up with the necessary files to run everything offline and makes it available as a download. All that needs to be done to run the app offline now is to double-click the 'start_gallery.bat' file and the app will start up, of course this requires that Docker for Windows is installed. Please note that you must have the following Docker settings on your machine:
 
 
