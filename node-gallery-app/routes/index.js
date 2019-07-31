@@ -164,7 +164,7 @@ router.get("/api/load-dashboard", async function(req, res, next) {
       //we use Promises here to ensure our loop completes before we return the response
       var promiseArray = [];
       response.forEach(widget => {
-        var rootURL ="host.docker.internal";
+        var rootURL ="host.docker.internal:";
         var containerName = widget.widget.docker;
         var splitNames = containerName.split(/[:/]/);
         var name = splitNames[1];
@@ -188,10 +188,9 @@ router.get("/api/load-dashboard", async function(req, res, next) {
                 var container = dockerHost.getContainer(containerData.Id);
                 container.inspect((err, data) => {
                   var port = data.NetworkSettings.Ports["3838/tcp"][0].HostPort;
-                  console.log(rootURL + port);
-                  var containerUrl = rootURL +":"+ port;
-                  var localUrl = "127.0.0.1:"+port;
-                  widget.widget.widgetURL = localUrl;
+                  console.log(rootURL +port);
+                  var containerUrl = rootURL + port;
+                  widget.widget.widgetURL = containerUrl;
                   checkReach(containerUrl, 10).then(bool => {
                     console.log(bool);
                     resolve(widget);
