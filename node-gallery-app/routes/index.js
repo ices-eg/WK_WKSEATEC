@@ -11,6 +11,8 @@ const path = require("path");
 
 const fs = require("fs");
 
+let dns = require('dns-sync');
+
 var HOST = process.env.HOST;
 
 var DIR = process.env.DIR;
@@ -162,7 +164,7 @@ router.get("/api/load-dashboard", async function(req, res, next) {
       //we use Promises here to ensure our loop completes before we return the response
       var promiseArray = [];
       response.forEach(widget => {
-        var rootURL = "http://host.docker.internal:";
+        var rootURL = dns.resolve('host.docker.internal');
         var containerName = widget.widget.docker;
         var splitNames = containerName.split(/[:/]/);
         var name = splitNames[1];
@@ -187,7 +189,7 @@ router.get("/api/load-dashboard", async function(req, res, next) {
                 container.inspect((err, data) => {
                   var port = data.NetworkSettings.Ports["3838/tcp"][0].HostPort;
                   console.log(rootURL + port);
-                  var url = rootURL + port;
+                  var url = rootURL +":"+ port;
                   widget.widget.widgetURL = url;
                   checkReach(url, 10).then(bool => {
                     console.log(bool);
