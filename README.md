@@ -16,6 +16,8 @@ This is the resulting repository of the 2019 Marine Institute Bursary, "Improvin
 
 ## General Overview
 
+![General Overview of compoennts and their interactions](https://github.com/ices-eg/WK_WKSEATEC/blob/master/BursaryDiagram.png?raw=true)
+
 There are three main components to this application, the back-end developed with Node.js & Express.js, the front-end developed with Angular and finally the containerization tool Docker which was used to deploy both the core apps and the Quality Assurance/Quality Control tools which the app is based around. The following summarizes the interaction between these three components.
 
 - The Angular app provides the front-end views and logic, it requests data from the back-end such as widgets(aka our QC/QA tools), a users saved widgets or when requesting the port that a widgets Docker container is running on so that it may display it in the dashboard. It also sends the back-end post requests when a user is adding a new widget to the app.
