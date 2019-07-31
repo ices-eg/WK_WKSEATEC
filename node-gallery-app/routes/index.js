@@ -164,7 +164,7 @@ router.get("/api/load-dashboard", async function(req, res, next) {
       //we use Promises here to ensure our loop completes before we return the response
       var promiseArray = [];
       response.forEach(widget => {
-        var rootURL ="host.docker.internal:";
+        var rootURL ="http://host.docker.internal:";
         var containerName = widget.widget.docker;
         var splitNames = containerName.split(/[:/]/);
         var name = splitNames[1];
