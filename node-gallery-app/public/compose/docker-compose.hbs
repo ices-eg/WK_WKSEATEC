@@ -4,14 +4,14 @@ services:
   angular:
     networks:
       gallerynet:
-    image: cianmc/angular-gallery-app:latest
+    image: informaticsmarine/angular-gallery-app:latest
     ports:
       - '5555:4200'
 
   express:
     networks: 
       gallerynet:
-    image: cianmc/node-gallery-app:latest
+    image: informaticsmarine/node-gallery-app:latest
     ports:
       - '3000:3000'
     environment:    
