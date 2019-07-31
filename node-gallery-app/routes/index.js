@@ -191,7 +191,7 @@ router.get("/api/load-dashboard", async function(req, res, next) {
                   console.log(rootURL +port);
                   var containerUrl = rootURL + port;
                   widget.widget.widgetURL = containerUrl;
-                  checkReach(containerUrl, 10).then(bool => {
+                  checkReach(containerUrl, 100).then(bool => {
                     console.log(bool);
                     resolve(widget);
                   });
