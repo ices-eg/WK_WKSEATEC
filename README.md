@@ -45,6 +45,6 @@ This will obtain the latest versions of the Angular and Node docker images and s
 
 ### Offline
 
-The offline files are obtained by pressing the download button in the top right of the dashboard, this button triggers a post request to the back-end, sending the JSON objects of every widget currently being used in the dashboard. The back-end parses this data and zips it up with the necessary files to run everything offline and makes it available as a download. All that needs to be done to run the app offline now is to double-click the 'start_gallery.bat' file and the app will start up, of course this requires that Docker for Windows is installed. Please note that you must have the following Docker settings on your machine:
+The offline files are obtained by pressing the download button in the top right of the dashboard, this button triggers a post request to the back-end, sending the JSON objects of every widget currently being used in the dashboard. The back-end parses this data and zips it up with the necessary files to run everything offline and makes it available as a download. Please ensure that in your Docker settings that you have enabled exposing the docker daemon(under General), and that you have allowed your main drive to be shared with containers(under Shared Drives). All that needs to be done to run the app offline now is to double-click the 'start_gallery.bat' file and the app will start up, of course this requires that Docker for Windows is installed.
 
 
